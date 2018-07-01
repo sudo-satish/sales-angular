@@ -1,18 +1,24 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons, NgbPanelChangeEvent, NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+import { Authentication } from '../../authentication/authentication.service';
 declare var $: any;
 @Component({
   selector: 'ap-navigation',
   templateUrl: './navigation.component.html'
 })
-export class NavigationComponent implements AfterViewInit {
-	name:string;
+export class NavigationComponent implements AfterViewInit, OnInit {
+  name:string;
+  user;
+
   	public config: PerfectScrollbarConfigInterface = {};
-  	constructor(private modalService: NgbModal) {
+  	constructor(private modalService: NgbModal, private authService: Authentication) {
     	
     }
 
+    ngOnInit() {
+      this.user = this.authService.getUser();
+    }
     // This is for Notifications
     notifications: Object[] = [{
       round: 'round-danger',

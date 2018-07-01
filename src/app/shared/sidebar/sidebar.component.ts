@@ -3,6 +3,7 @@ import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ROUTES } from './menu-items';
 import { RouteInfo } from "./sidebar.metadata";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Authentication } from '../../authentication/authentication.service';
 declare var $: any;
 @Component({
   selector: 'ap-sidebar',
@@ -11,7 +12,8 @@ declare var $: any;
 })
 export class SidebarComponent implements OnInit {
 	
-    
+    user;
+
     showMenu: string = '';
     showSubMenu: string = '';
     public sidebarnavItems: any[];
@@ -33,8 +35,12 @@ export class SidebarComponent implements OnInit {
         }
     }
     
-    constructor(private modalService: NgbModal, private router: Router,
-        private route: ActivatedRoute) {
+    constructor(
+        private modalService: NgbModal, 
+        private router: Router,
+        private route: ActivatedRoute,
+        private authService: Authentication
+    ) {
         
     } 
     // End open close
@@ -54,5 +60,10 @@ export class SidebarComponent implements OnInit {
 
         });
         
+        this.setUser();
+    }
+
+    setUser() {
+        this.user = this.authService.getUser();
     }
 }

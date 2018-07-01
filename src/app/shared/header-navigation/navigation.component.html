@@ -203,15 +203,16 @@
                 <!-- Profile -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
-                    <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
+                    <a ngbDropdownToggle class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img [src]="user.profile_image" alt="user" class="profile-pic" /></a>
                     <div class="dropdown-menu  animated slideInDown" ngbDropdownMenu>
                         <ul class="dropdown-user">
                             <li>
                                 <div class="dw-user-box">
-                                    <div class="u-img"><img src="assets/images/users/1.jpg" alt="user"></div>
+                                    <div class="u-img"><img [src]="user.profile_image" alt="user"></div>
                                     <div class="u-text">
-                                        <h4>Steave Jobs</h4>
-                                        <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <h4>{{ user.name }}</h4>
+                                        <p class="text-muted">{{ user.email }}</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>

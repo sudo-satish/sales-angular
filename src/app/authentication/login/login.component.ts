@@ -1,5 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Authentication } from '../authentication.service';
 
 @Component({
     selector: 'app-login',
@@ -8,9 +10,17 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-    constructor(public router: Router) {}
+    loginForm: FormGroup;
 
-    ngOnInit() {}
+    constructor(public router: Router, private fb: FormBuilder, private authService: Authentication) {}
+
+    ngOnInit() {
+
+        this.loginForm = this.fb.group({
+            'email': ['', Validators.required],
+            'password': ['', Validators.required],
+        });
+    }
 
     ngAfterViewInit() {
         $(function() {
@@ -24,7 +34,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
 
     onLoggedin() {
-        localStorage.setItem('isLoggedin', 'true');
+        this.authService.login(this.loginForm.value);
     }
 
 }
