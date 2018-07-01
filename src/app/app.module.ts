@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule, LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 
@@ -21,6 +21,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
+import { AuthInterceptor } from './authentication/auth.interceptor';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -53,9 +54,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
     },{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

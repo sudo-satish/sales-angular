@@ -20,6 +20,8 @@ export class Authentication  {
             .post('/api/register', signupDetail)
             .subscribe((resp) => {
                 console.log(resp);
+            }, (err) => {
+                console.log(' Err => ', err);
             });
     }
 }
