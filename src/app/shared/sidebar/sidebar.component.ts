@@ -39,7 +39,7 @@ export class SidebarComponent implements OnInit {
         private modalService: NgbModal, 
         private router: Router,
         private route: ActivatedRoute,
-        private authService: Authentication
+        public authService: Authentication
     ) {
         
     } 

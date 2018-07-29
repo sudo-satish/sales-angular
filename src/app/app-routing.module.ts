@@ -16,6 +16,8 @@ export const Approutes: Routes = [
         { path: 'starter', loadChildren: './starter/starter.module#StarterModule' },
         { path: 'component', loadChildren: './component/component.module#ComponentsModule' },
         { path: 'charts', loadChildren: './charts/charts.module#ChartModule' },
+        { path: 'stock', loadChildren: './stock/stock.module#StockModule' },
+        { path: 'sys', loadChildren: './sys/sys.module#SysModule' },
     ]
 },
 {
@@ -25,7 +27,8 @@ export const Approutes: Routes = [
         {
             path: 'authentication',
             loadChildren: './authentication/authentication.module#AuthenticationModule'
-        }
+        },
+        
     ]
 }, 
 {

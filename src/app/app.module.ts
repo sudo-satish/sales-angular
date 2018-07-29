@@ -22,6 +22,11 @@ import { Approutes } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SpinnerComponent } from './shared/spinner.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
+import { ResourceComponentComponent } from './shared/components/resource-component/resource-component.component';
+import { AlertComponent } from './shared/components/alert/alert.component';
+
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -37,7 +42,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NavigationComponent,
     BreadcrumbComponent,
     SidebarComponent,
-    BlankComponent
+    BlankComponent,
+    ResourceComponentComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,
@@ -50,13 +57,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule
   ],
   providers: [
-      {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    },{
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    },
+    
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
 ],
   bootstrap: [AppComponent]

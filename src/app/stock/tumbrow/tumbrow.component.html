@@ -1,0 +1,85 @@
+
+
+
+<div class="row" *ngIf=" (formMode == 'NEW' || formMode == 'EDIT') ">
+  <div class="col-12">
+
+    <div class="button-group">
+      <button type="button" class="btn btn-primary">New</button>
+      <button type="button" class="btn btn-success" [disabled]="heroForm.invalid" (click)="submit(heroForm)">Save</button>
+      <button type="button" class="btn btn-secondary" (click)="formMode = 'SEARCH'">Search</button>
+      <button type="button" class="btn btn-info" (click)="heroForm.resetForm({name:'satish', alterEgo: 'asdsdf', power: 'Really Smart'})">Reset</button>
+      <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+      <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+    </div>
+
+
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Form validation with hero</h4> -->
+        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
+          <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a>
+        <!-- </h6> -->
+
+        
+
+        <form #heroForm="ngForm" (submit)="submit(heroForm)">
+          <div>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input id="name" name="name" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="hero.name" #name="ngModel">
+              <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                <div *ngIf="name.errors.required"> Name is required. </div>
+                <div *ngIf="name.errors.minlength"> Name must be at least 4 characters long. </div>
+                <div *ngIf="name.errors.forbiddenName"> Name cannot be Bob. </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="alterEgo">Alter Ego</label>
+              <input id="alterEgo" class="form-control" name="alterEgo" [(ngModel)]="hero.alterEgo"> </div>
+            <div class="form-group">
+              <label for="power">Hero Power</label>
+              <select id="power" name="power" class="form-control" required [(ngModel)]="hero.power" #power="ngModel">
+                <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+              </select>
+              <div *ngIf="power.errors && power.touched" class="alert alert-danger">
+                <div *ngIf="power.errors.required">Power is required.</div>
+              </div>
+            </div>
+            <!-- <button type="submit" class="btn btn-danger">Submit</button> -->
+            <!-- <button type="button" class="btn btn-inverse" (click)="heroForm.resetForm({name:'satish', alterEgo: 'asdsdf', power: 'Really Smart'})">Reset</button> -->
+          </div>
+          <div class="submitted-message" *ngIf="heroForm.submitted">
+            <p>You've submitted your hero, {{ heroForm.value.name }}!</p>
+            <!-- <button class="btn btn-inverse" (click)="heroForm.resetForm({name:'satish'})">Add new hero</button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search mode -->
+<div class="row" *ngIf="formMode == 'SEARCH'">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ formTitle }}</h4>
+        <h6 class="card-subtitle"> {{ formSubtitle }}</h6>
+        <div class="table table-responsive smart-table">
+          <ng2-smart-table 
+            [settings]="settings2" 
+            [source]="source2" 
+            class="" 
+            (edit)="onEdit($event)" 
+            (create)="onNew($event)" 
+            (delete)="onDelete($event)"
+
+            (editConfirm)="onEditConfirm($event)"
+            (createConfirm)="onCreateConfirm($event)"
+          ></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

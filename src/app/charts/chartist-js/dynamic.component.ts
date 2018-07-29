@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChartType } from "ng-chartist/dist/chartist.component";
+import { ChartType } from "ng-chartist";
 
 import * as Chartist from 'chartist';
 

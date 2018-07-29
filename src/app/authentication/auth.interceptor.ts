@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -11,6 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
         let token = localStorage.getItem('token');
         let url = environment.url;
         url += req.url;
+        console.log(' Url =>', url);
         
         const copiedReq = req.clone({
             headers: req.headers.append('Authorization', 'Bearer ' + token), url: url

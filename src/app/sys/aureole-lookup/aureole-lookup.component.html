@@ -1,0 +1,21 @@
+<!-- Search mode -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ formTitle }}</h4>
+        <h6 class="card-subtitle"> {{ formSubtitle }}</h6>
+        <div class="table table-responsive smart-table">
+          <ng2-smart-table 
+            [settings]="settings" 
+            [source]="source" 
+            class="" 
+            (createConfirm)="onCreateConfirm($event)"
+            (editConfirm)="onEditConfirm($event)" 
+            (deleteConfirm)="onDeleteConfirm($event)"
+          ></ng2-smart-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
