@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from '../../../../node_modules/ng2-smart-table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
 import * as tableData from './smart-data-table';
 import { AlertService } from '../../shared/services/alert.service';
+import { formArrayNameProvider } from '../../../../node_modules/@angular/forms/src/directives/reactive_directives/form_group_name';
+import { FormGroup } from '../../../../node_modules/@angular/forms';
 
 @Component({
   selector: 'app-tumbrow',
@@ -16,11 +18,14 @@ export class TumbrowComponent implements OnInit {
   formSubtitle; // SEARCH, EDIT, NEW
   resourceName;
   resourceDescription;
-
+  @ViewChild('form') form : FormGroup;
+  // formData: any;
 
   powers = ['Really Smart', 'Super Flexible', 'Weather Changer'];
   hero = { name: 'Dr.', alterEgo: 'Dr. What', power: this.powers[0] };
 
+  formData = { s_no: '', roll_no: '', gsm: '', bf: '', no_reels: '', size: '', pm: '', weight:'', date:'', operator:'', shift:''};
+  
 
   source2: LocalDataSource;
   settings2 = tableData.settings2; 
