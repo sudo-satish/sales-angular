@@ -5,13 +5,13 @@ import { RouterModule } from '@angular/router';
 import { sysRoutes } from './sys.routing';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { HttpClientModule } from '../../../node_modules/@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
-    NgxDatatableModule,
     Ng2SmartTableModule,
+    NgxDatatableModule,
     RouterModule.forChild(sysRoutes),
   ],
   exports: [

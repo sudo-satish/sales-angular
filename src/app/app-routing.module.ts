@@ -18,6 +18,7 @@ export const Approutes: Routes = [
         { path: 'charts', loadChildren: './charts/charts.module#ChartModule' },
         { path: 'stock', loadChildren: './stock/stock.module#StockModule' },
         { path: 'sys', loadChildren: './sys/sys.module#SysModule' },
+        { path: 'hrm', loadChildren: './hrm/hrm.module#HrmModule' },
     ]
 },
 {

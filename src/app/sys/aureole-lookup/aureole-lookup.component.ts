@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import * as tableData from './smart-data-table';
 import { HttpClient } from '@angular/common/http';
 import { ChttpService } from '../../shared/services/chttp.service';
 import { environment } from '../../../environments/environment';
 
+declare var $:any;
+
 @Component({
   selector: 'app-aureole-lookup',
   templateUrl: './aureole-lookup.component.html',
   styleUrls: ['./aureole-lookup.component.css']
 })
-export class AureoleLookupComponent implements OnInit {
+export class AureoleLookupComponent implements OnInit, AfterViewInit {
 
   constructor( 
-    private http: HttpClient,
-    private chttp: ChttpService
+    // private http: HttpClient,
+    // private chttp: ChttpService
   ) { }
 
   formTitle: String = 'Aureole Lookup';
@@ -27,6 +29,11 @@ export class AureoleLookupComponent implements OnInit {
   ngOnInit() {
 
     this.setData();
+  }
+
+  ngAfterViewInit() {
+    $('.ng2-smart-actions-title-add').attr('colspan', '2');
+    $('.ng2-smart-filters > .ng2-smart-th.id').remove()
   }
 
   setData() {

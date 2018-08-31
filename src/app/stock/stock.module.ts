@@ -7,8 +7,8 @@ import { JsonpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StockRoutes } from './stock.routing';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+// import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 import { TumbrowComponent } from './tumbrow/tumbrow.component';
 
@@ -20,8 +20,8 @@ import { TumbrowComponent } from './tumbrow/tumbrow.component';
     ReactiveFormsModule,
     JsonpModule,
     NgbModule,
-    Ng2SmartTableModule, 
-    NgxDatatableModule
+    // Ng2SmartTableModule, 
+    // NgxDatatableModule
   ],
   declarations: [
     TumbrowComponent

@@ -5,7 +5,7 @@ import { Component, AfterViewInit } from '@angular/core';
 export class StarterComponent implements AfterViewInit {
 	subtitle:string;	
 	constructor() {
-		this.subtitle = "This is some text within a card block."
+		this.subtitle = "Welcome to sales module."
 	}
 
 	ngAfterViewInit(){}

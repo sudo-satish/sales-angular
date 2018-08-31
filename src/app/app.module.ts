@@ -24,9 +24,10 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { ResourceComponentComponent } from './shared/components/resource-component/resource-component.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
+// import { UtComponent } from './shared/components/resource-component/ut-component/UtComponent';
 
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+// import { Ng2SmartTableModule } from 'ng2-smart-table';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,

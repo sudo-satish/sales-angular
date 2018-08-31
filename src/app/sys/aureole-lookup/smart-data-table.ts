@@ -64,5 +64,5 @@ export var settings = {
     pager : {
             display: true
     },
-    mode: "inline",
+    mode: "inline"
 };

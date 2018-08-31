@@ -1,0 +1,133 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <!-- <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button> -->
+  <!-- <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button> -->
+  <!-- <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button> -->
+  <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+  <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+</div>
+
+
+<div class="row" *ngFor="let rows of addressRows">
+
+  <div class="col-md-6" *ngFor="let cols of rows">
+    <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white">{{cols?.address_line_one}} | {{ getMeaningFromCode(lov?.address_type, cols?.type) }}</h4>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{ getCityName(cols?.city_id) }}</h3>
+        <h6 class="card-subtitle mb-2 text-muted">{{ getMeaningFromCode(lov?.states, cols?.state_id) }}</h6>
+        <p class="card-text">{{cols?.address_line_one}}, {{cols?.address_line_two}}.</p>
+        <a href="javascript:void(0)" class="btn btn-primary" (click)="this.populateForm(form, cols)">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" >
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Form validation with hero</h4> -->
+        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
+          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
+        <!-- </h6> -->
+
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+
+            <!-- S no-->
+
+            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+            <input type="hidden" name="client_id" #client_id="ngModel" [(ngModel)]="clientId">
+
+            <div class="form-group">
+              <label for="address_line_one">Address Line 1 *</label>
+              <input id="address_line_one" name="address_line_one" class="form-control" required [(ngModel)]="formData.address_line_one" #address_line_one="ngModel">
+              <div *ngIf="address_line_one.invalid && (address_line_one.dirty || address_line_one.touched)" class="alert alert-danger">
+                <div *ngIf="address_line_one.errors.required"> Address Line 1 </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="address_line_two">Address Line 2 *</label>
+              <input id="address_line_two" name="address_line_two" class="form-control" required [(ngModel)]="formData.address_line_two" #address_line_two="ngModel">
+              <div *ngIf="address_line_two.invalid && (address_line_two.dirty || address_line_two.touched)" class="alert alert-danger">
+                <div *ngIf="address_line_two.errors.required"> Address Line 2 is required. </div>
+              </div>
+            </div>
+
+            <div class="row p-t-20">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="city_id"> City *</label>
+                  <select id="city_id" name="city_id" class="custom-select" required [(ngModel)]="formData.city_id" #city_id="ngModel">
+                    <option [value]="drop.code" *ngFor="let drop of lov?.citys"> {{ drop.meaning }}</option>
+                  </select>
+                  <div *ngIf="city_id.invalid && (city_id.dirty || city_id.touched)" class="alert alert-danger">
+                    <div *ngIf="city_id.errors.required"> City is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="state_id"> State *</label>
+                  <select id="state_id" name="state_id" class="custom-select" required [(ngModel)]="formData.state_id" #state_id="ngModel">
+                    <option [value]="drop.code" *ngFor="let drop of lov?.states"> {{ drop.meaning }}</option>
+                  </select>
+                  <div *ngIf="state_id.invalid && (state_id.dirty || state_id.touched)" class="alert alert-danger">
+                    <div *ngIf="state_id.errors.required"> State is required. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="pincode">Pincode *</label>
+              <input id="pincode" name="pincode" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.pincode" #pincode="ngModel">
+              <div *ngIf="pincode.invalid && (pincode.dirty || pincode.touched)" class="alert alert-danger">
+                <div *ngIf="pincode.errors.required"> Pincode is required. </div>
+                <div *ngIf="pincode.errors.minlength"> Pincode must be at least 4 characters long. </div>
+                <div *ngIf="pincode.errors.forbiddenName"> Pincode cannot be Bob. </div>
+              </div>
+            </div>
+            
+
+            <div class="row p-t-20">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="type"> Type *</label>
+                  <select id="type" name="type" class="custom-select" required [(ngModel)]="formData.type" #type="ngModel">
+                    <option [value]="drop.code" *ngFor="let drop of lov?.address_type"> {{ drop.meaning }}</option>
+                  </select>
+                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger">
+                    <div *ngIf="type.errors.required"> Type is required. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
+                    <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" [(ngModel)]="formData.active">
+                    <label class="custom-control-label" for="active">Active</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+        </form>
+
+        <!-- rows -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Search mode -->

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+// import { LocalDataSource } from 'ng2-smart-table';
 import * as tableData from './smart-data-table';
 import { AlertService } from '../../shared/services/alert.service';
 import { formArrayNameProvider } from '../../../../node_modules/@angular/forms/src/directives/reactive_directives/form_group_name';
@@ -27,7 +27,7 @@ export class TumbrowComponent implements OnInit {
   formData = { s_no: '', roll_no: '', gsm: '', bf: '', no_reels: '', size: '', pm: '', weight:'', date:'', operator:'', shift:''};
   
 
-  source2: LocalDataSource;
+  // source2: LocalDataSource;
   settings2 = tableData.settings2; 
 
   constructor(
@@ -43,7 +43,7 @@ export class TumbrowComponent implements OnInit {
     this.formTitle = 'Tumbrow';
     this.formSubtitle = 'Form subtitle';
 
-    this.source2 = new LocalDataSource(tableData.data); // create the source
+    // this.source2 = new LocalDataSource(tableData.data); // create the source
     this.resourceName = 'Tumbrow';
     this.resourceDescription = 'Tumbrow Search';
   }

@@ -45,18 +45,11 @@ export const ROUTES: RouteInfo[] = [
             { path: '/sys/aureole-lookup', title: 'Lookup', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     },
-
     {
-        path: '', title: 'Menu Levels', icon: 'mdi mdi-arrange-send-backward', class: 'has-arrow', label: '', labelClass: '', extralink: false,
+        path: '', title: 'hrm', icon: 'mdi mdi-bullseye', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
-            { path: 'javascript:void(0);', title: 'Second Level', icon: '', class: '', label: '', labelClass: '', extralink: true, submenu: [] },
-            {
-                path: '', title: 'Second Child', icon: '', class: 'has-arrow', label: '', labelClass: '', extralink: false,
-                submenu: [
-                    { path: 'javascript:void(0);', title: 'Third 1.1', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
-                    { path: 'javascript:void(0);', title: 'Third 1.2', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
-                ]
-            },
+            { path: '/hrm/client', title: 'Client', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/user', title: 'User', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     }
      

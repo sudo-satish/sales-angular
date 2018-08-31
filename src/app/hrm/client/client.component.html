@@ -1,0 +1,221 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
+  <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button>
+  <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button>
+  <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+  <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+</div>
+
+<div class="row" >
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Form validation with hero</h4> -->
+        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
+          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
+        <!-- </h6> -->
+
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+
+            <!-- S no-->
+
+            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+
+            <div class="form-group">
+              <label for="client_name">Client Name *</label>
+              <input id="client_name" name="client_name" class="form-control" required [(ngModel)]="formData.client_name" #client_name="ngModel">
+              <div *ngIf="client_name.invalid && (client_name.dirty || client_name.touched)" class="alert alert-danger">
+                <div *ngIf="client_name.errors.required"> Client Name is required. </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="head_office_address"> Head Office Address *</label>
+              <input id="head_office_address" name="head_office_address" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.head_office_address" #head_office_address="ngModel">
+              <div *ngIf="head_office_address.invalid && (head_office_address.dirty || head_office_address.touched)" class="alert alert-danger">
+                <div *ngIf="head_office_address.errors.required"> Head Office Address is required. </div>
+                <div *ngIf="head_office_address.errors.minlength"> Head Office Address must be at least 4 characters long. </div>
+                <div *ngIf="head_office_address.errors.forbiddenName"> Head Office Address cannot be Bob. </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="pan">PAN *</label>
+              <input id="pan" name="pan" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.pan" #pan="ngModel">
+              <div *ngIf="pan.invalid && (pan.dirty || pan.touched)" class="alert alert-danger">
+                <div *ngIf="pan.errors.required"> PAN is required. </div>
+                <div *ngIf="pan.errors.minlength"> PAN must be at least 4 characters long. </div>
+                <div *ngIf="pan.errors.forbiddenName"> PAN cannot be Bob. </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="gst">GST *</label>
+              <input id="gst" name="gst" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.gst" #gst="ngModel">
+              <div *ngIf="gst.invalid && (gst.dirty || gst.touched)" class="alert alert-danger">
+                <div *ngIf="gst.errors.required"> GST is required. </div>
+                <div *ngIf="gst.errors.minlength"> GST must be at least 4 characters long. </div>
+                <div *ngIf="gst.errors.forbiddenName"> GST cannot be Bob. </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="billto_client_id">Bill To</label>
+              <input id="billto_client_id" name="billto_client_id" class="form-control"  [(ngModel)]="formData.billto_client_id" #billto_client_id="ngModel">
+              <div *ngIf="billto_client_id.invalid && (billto_client_id.dirty || billto_client_id.touched)" class="alert alert-danger">
+                <div *ngIf="billto_client_id.errors.required"> Bill To is required. </div>
+                <div *ngIf="billto_client_id.errors.minlength"> Bill To must be at least 4 characters long. </div>
+                <div *ngIf="billto_client_id.errors.forbiddenName"> Bill To cannot be Bob. </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <!-- <label for="active">Active</label>
+              <input id="active" name="active" class="form-control"  [(ngModel)]="formData.active" #active="ngModel"> -->
+              
+
+              <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
+                <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" [(ngModel)]="formData.active">
+                <label class="custom-control-label" for="active">Active</label>
+              </div>
+
+              <div *ngIf="active.invalid && (active.dirty || active.touched)" class="alert alert-danger">
+                <div *ngIf="active.errors.required"> Active is required. </div>
+                <div *ngIf="active.errors.minlength"> Active must be at least 4 characters long. </div>
+                <div *ngIf="active.errors.forbiddenName"> Active cannot be Bob. </div>
+              </div>
+
+            </div>
+            
+            <div class="form-group">
+              <label for="credit_limit">Credit Limit</label>
+              <input id="credit_limit" name="credit_limit" class="form-control" [(ngModel)]="formData.credit_limit" #credit_limit="ngModel">
+              <div *ngIf="credit_limit.invalid && (credit_limit.dirty || credit_limit.touched)" class="alert alert-danger">
+                <div *ngIf="credit_limit.errors.required"> Credit Limit is required. </div>
+                <div *ngIf="credit_limit.errors.minlength"> Credit Limit must be at least 4 characters long. </div>
+                <div *ngIf="credit_limit.errors.forbiddenName"> Credit Limit cannot be Bob. </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="balance">Balance</label>
+              <input id="balance" name="balance" class="form-control" [(ngModel)]="formData.balance" #balance="ngModel">
+              <div *ngIf="balance.invalid && (balance.dirty || balance.touched)" class="alert alert-danger">
+                <div *ngIf="balance.errors.required"> Balance is required. </div>
+                <div *ngIf="balance.errors.minlength"> Balance must be at least 4 characters long. </div>
+                <div *ngIf="balance.errors.forbiddenName"> Balance cannot be Bob. </div>
+              </div>
+            </div>
+          </div>
+          <div class="submitted-message" *ngIf="form.submitted">
+            <p>You've submitted your form, {{ form.value }}!</p>
+          </div>
+        </form>
+
+        <div class="search" *ngIf=" (formMode == 'SEARCH') ">
+
+           <!-- Search -->
+          <div class="card" *ngIf="rows.length > 0">
+            <div class="card-body">
+              <h4 class="card-title">Editing Option</h4>
+              <h5 class="card-subtitle">This is the editing Data table option you can double click on text</h5>
+          
+              <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'"
+                [rows]="rows">
+
+                <ngx-datatable-column name="Edit">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="onEdit($event, rowIndex, form)"> Edit </button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Price Plan" prop="id">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="managePrice(value)"> Price </button>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Manage Address" prop="id">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="manageAddress(value)"> Address </button>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Client Name" prop="client_name">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-client_name'] = true" *ngIf="!editing[rowIndex + '-client_name']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'client_name', rowIndex)" *ngIf="editing[rowIndex+ '-client_name']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Head Office Address" prop="head_office_address">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-head_office_address'] = true" *ngIf="!editing[rowIndex + '-head_office_address']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'head_office_address', rowIndex)" *ngIf="editing[rowIndex+ '-head_office_address']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="GST" prop="gst">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gst'] = true" *ngIf="!editing[rowIndex + '-gst']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'gst', rowIndex)" *ngIf="editing[rowIndex+ '-gst']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Credit Limit" prop="credit_limit">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-credit_limit'] = true" *ngIf="!editing[rowIndex + '-credit_limit']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'credit_limit', rowIndex)" *ngIf="editing[rowIndex+ '-credit_limit']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Balance" prop="balance">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-balance'] = true" *ngIf="!editing[rowIndex + '-balance']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'balance', rowIndex)" *ngIf="editing[rowIndex+ '-balance']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Active">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-active'] = true" *ngIf="!editing[rowIndex + '-active']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'active', rowIndex)" *ngIf="editing[rowIndex+ '-active']" type="text" [value]="value"/>
+                    <!-- <select *ngIf="editing[rowIndex + '-gender']" (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select> -->
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Pan">
+                  <ng-template ngx-datatable-cell-template let-value="value">
+                    {{value}}
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search mode -->

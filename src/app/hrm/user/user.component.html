@@ -1,0 +1,279 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
+  <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button>
+  <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+  <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+</div>
+
+<div class="row" >
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Form validation with hero</h4> -->
+        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
+          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
+        <!-- </h6> -->
+
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+
+            <!-- S no-->
+
+            <input type="hidden" name="id" [(ngModel)]="formData.id">
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="name">Name *</label>
+                  <input id="name" name="name" class="form-control" required [(ngModel)]="formData.name" #name="ngModel">
+                  <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required"> Name is required. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input id="email" name="email" type="email" class="form-control" required [(ngModel)]="formData.email" #email="ngModel">
+                  <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required"> Email is required. </div>
+                  </div>
+
+                  <div *ngIf="serverErrors && serverErrors.email" class="alert alert-danger">
+                    <div *ngFor="let errors of serverErrors.email"> {{ errors }} </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="email_official">Official Email</label>
+                  <input id="email_official" name="email_official" type="email" class="form-control" required [(ngModel)]="formData.email_official"
+                    #email_official="ngModel">
+                  <div *ngIf="email_official.invalid && (email_official.dirty || email_official.touched)" class="alert alert-danger">
+                    <div *ngIf="email_official.errors.email"> Official Email must be a valid email. </div>
+                    <div *ngIf="email_official.errors.required"> Official Email is required. </div>
+                    <div *ngIf="email_official.errors.minlength"> Official Email must be at least 4 characters long. </div>
+                    <div *ngIf="email_official.errors.forbiddenName"> Official Email cannot be Bob. </div>
+                  </div>
+                  
+                  <div *ngIf="serverErrors && serverErrors.email_official" class="alert alert-danger">
+                    <div *ngFor="let errors of serverErrors.email_official"> {{ errors }} </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="employee_code">Employee Code</label>
+                  <input id="employee_code" name="employee_code" class="form-control" required [(ngModel)]="formData.employee_code" #employee_code="ngModel">
+                  <div *ngIf="employee_code.invalid && (employee_code.dirty || employee_code.touched)" class="alert alert-danger">
+                    <div *ngIf="employee_code.errors.required"> Employee Code is required. </div>
+                    <!-- <div *ngIf="employee_code.errors.minlength"> employee_code must be at least 4 characters long. </div> -->
+                    <!-- <div *ngIf="employee_code.errors.forbiddenName"> employee_code cannot be Bob. </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Designation *</label>
+                  <select name="designation_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.designation_id"
+                    #designation_id="ngModel">
+                    <option selected>Choose...</option>
+                    <option [value]="drop.code" *ngFor="let drop of lov?.designations"> {{ drop.meaning }}</option>
+                    <!-- <option value="2">Two</option> -->
+                    <!-- <option value="3">Three</option> -->
+                  </select>
+                
+                  <div *ngIf="designation_id.invalid && (designation_id.dirty || designation_id.touched)" class="alert alert-danger">
+                    <div *ngIf="designation_id.errors.required"> Designation is required. </div>
+                    <!-- <div *ngIf="designation_id.errors.minlength"> Head Office Address must be at least 4 characters long. </div> -->
+                    <!-- <div *ngIf="designation_id.errors.forbiddenName"> Head Office Address cannot be Bob. </div> -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Location *</label>
+                  <select name="location_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.location_id"
+                    #location_id="ngModel">
+                    <option selected>Choose...</option>
+                    <option [value]="drop.code" *ngFor="let drop of lov?.locations"> {{ drop.meaning }}</option>
+                  </select>
+                
+                  <div *ngIf="location_id.invalid && (location_id.dirty || location_id.touched)" class="alert alert-danger">
+                    <div *ngIf="location_id.errors.required"> Designation is required. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Department *</label>
+                  <select name="department_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.department_id"
+                    #department_id="ngModel">
+                    <option selected>Choose...</option>
+                    <option [value]="drop.code" *ngFor="let drop of lov?.departments"> {{ drop.meaning }}</option>
+                  </select>
+                
+                  <div *ngIf="department_id.invalid && (department_id.dirty || department_id.touched)" class="alert alert-danger">
+                    <div *ngIf="department_id.errors.required"> Designation is required. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label>Role *</label>
+                  <select name="roles_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.roles_id"
+                    #roles_id="ngModel">
+                    <option selected>Choose...</option>
+                    <option [value]="drop.code" *ngFor="let drop of lov?.roles"> {{ drop.meaning }}</option>
+                  </select>
+                
+                  <div *ngIf="roles_id.invalid && (roles_id.dirty || roles_id.touched)" class="alert alert-danger">
+                    <div *ngIf="roles_id.errors.required"> Designation is required. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+          <div class="submitted-message" *ngIf="form.submitted">
+            <p>You've submitted your form, {{ form.value }}!</p>
+          </div>
+        </form>
+
+        <div class="search" *ngIf=" (formMode == 'SEARCH') ">
+
+           <!-- Search -->
+          <div class="card" *ngIf="rows.length > 0">
+            <div class="card-body">
+              <h4 class="card-title">Editing Option</h4>
+              <h5 class="card-subtitle">This is the editing Data table option you can double click on text</h5>
+          
+              <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'"
+                [rows]="rows">
+
+                <ngx-datatable-column name="Edit">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="onEdit($event, rowIndex, form)"> Edit </button>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Name" prop="name">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Email">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-email'] = true" *ngIf="!editing[rowIndex + '-email']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'email', rowIndex)" *ngIf="editing[rowIndex+ '-email']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column name="Official Email" prop="email_official">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-email_official'] = true" *ngIf="!editing[rowIndex + '-email_official']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'email_official', rowIndex)" *ngIf="editing[rowIndex+ '-email_official']" type="text" [value]="value"
+                    />
+
+                    <!-- <select *ngIf="editing[rowIndex + '-email']" (change)="updateValue($event, 'email', rowIndex)" [value]="value">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select> -->
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Employee Code" prop="employee_code">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-employee_code'] = true" *ngIf="!editing[rowIndex + '-employee_code']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'employee_code', rowIndex)" *ngIf="editing[rowIndex+ '-employee_code']" type="text" [value]="value"
+                    />
+
+                    <!-- <select *ngIf="editing[rowIndex + '-email']" (change)="updateValue($event, 'email', rowIndex)" [value]="value">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select> -->
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Department" prop="department_id">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-department_id'] = true" *ngIf="!editing[rowIndex + '-department_id']">
+                      {{value}}
+                    </span>
+
+                    <select *ngIf="editing[rowIndex + '-department_id']" (change)="updateValue($event, 'department_id', rowIndex)" [value]="value">
+                      <option [value]="drop.code" *ngFor="let drop of lov?.departments" > {{ drop.meaning }} </option>
+                    </select>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column name="Designation" prop="designation_id">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-designation_id'] = true" *ngIf="!editing[rowIndex + '-designation_id']">
+                      {{value}}
+                    </span>
+
+                    <select *ngIf="editing[rowIndex + '-designation_id']" (change)="updateValue($event, 'designation_id', rowIndex)" [value]="value">
+                      <option [value]="drop.code" *ngFor="let drop of lov?.designations" > {{ drop.meaning }} </option>
+                    </select>
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column name="Designation" prop="location_id">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-location_id'] = true" *ngIf="!editing[rowIndex + '-location_id']">
+                      {{value}}
+                    </span>
+
+                    <select *ngIf="editing[rowIndex + '-location_id']" (change)="updateValue($event, 'location_id', rowIndex)" [value]="value">
+                      <option [value]="drop.code" *ngFor="let drop of lov?.locations" > {{ drop.meaning }} </option>
+                    </select>
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column name="Roles" prop="roles_id">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-roles_id'] = true" *ngIf="!editing[rowIndex + '-roles_id']">
+                      {{value}}
+                    </span>
+
+                    <select *ngIf="editing[rowIndex + '-roles_id']" (change)="updateValue($event, 'roles_id', rowIndex)" [value]="value">
+                      <option [value]="drop.code" *ngFor="let drop of lov?.roles" > {{ drop.meaning }} </option>
+                    </select>
+                  </ng-template>
+                </ngx-datatable-column>
+                
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search mode -->

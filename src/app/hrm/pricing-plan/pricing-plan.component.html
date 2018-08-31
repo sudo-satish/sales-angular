@@ -1,0 +1,158 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <!-- <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button> -->
+  <!-- <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button> -->
+  <!-- <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button> -->
+  <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+  <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+</div>
+
+
+<div class="row" *ngFor="let rows of addressRows">
+  <!-- <div class="col-12 m-t-30">
+            <h4 class="m-b-0">Card styles</h4>
+            <p class="text-muted m-t-0 font-12">Cards include various options for customizing their backgrounds, borders, and color.
+              <code>.card-primary info, warning, danger</code>
+            </p>
+          </div> -->
+  <div class="col-md-6" *ngFor="let cols of rows">
+    <div class="card card-inverse" style="background-color: #333; border-color: #333;">
+      <div class="card-header">
+        <h4 class="m-b-0 text-white">{{cols?.item_name}} | {{ getMeaningFromCode(lov?.units, cols?.unit) }}</h4>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">{{ cols?.from_date | date }} -to- {{ cols?.from_date | date }} </h3>
+        <h6 class="card-subtitle mb-2 text-muted">{{ cols?.gsm }}</h6>
+        <p class="card-text"> Default Price : {{cols?.default_price}}, Actual Price : {{cols?.actual_price}}.</p>
+        <a href="javascript:void(0)" class="btn btn-primary" (click)="this.populateForm(form, cols)">Edit</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" >
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <!-- <h4 class="card-title">Form validation with hero</h4> -->
+        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
+          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
+        <!-- </h6> -->
+
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+
+            <!-- S no-->
+
+              <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+              <input type="hidden" name="client_id" #client_id="ngModel" [(ngModel)]="clientId">
+
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="item_name">Item Name *</label>
+                    <input id="item_name" name="item_name" class="form-control" required [(ngModel)]="formData.item_name" #item_name="ngModel">
+                    <div *ngIf="item_name.invalid && (item_name.dirty || item_name.touched)" class="alert alert-danger">
+                      <div *ngIf="item_name.errors.required"> Address Line 1 </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="gsm">GSM *</label>
+                    <input id="gsm" name="gsm" class="form-control" required [(ngModel)]="formData.gsm" #gsm="ngModel">
+                    <div *ngIf="gsm.invalid && (gsm.dirty || gsm.touched)" class="alert alert-danger">
+                      <div *ngIf="gsm.errors.required"> GSM is required. </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="default_price">Default Price *</label>
+                    <input id="default_price" name="default_price" class="form-control" required [(ngModel)]="formData.default_price" #default_price="ngModel">
+                    <div *ngIf="default_price.invalid && (default_price.dirty || default_price.touched)" class="alert alert-danger">
+                      <div *ngIf="default_price.errors.required"> Default Price </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="actual_price">Actual Price *</label>
+                    <input id="actual_price" name="actual_price" class="form-control" required [(ngModel)]="formData.actual_price" #actual_price="ngModel">
+                    <div *ngIf="actual_price.invalid && (actual_price.dirty || actual_price.touched)" class="alert alert-danger">
+                      <div *ngIf="actual_price.errors.required"> actual_price is required. </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row p-t-20">
+                <div class="col-md-6">
+                  <div class="form-group">
+
+                    <label for="from_date">From Date *</label>
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" id="from_date" name="from_date" [(ngModel)]="model" #from_date="ngModel" ngbDatepicker #fromDate="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary no-shadow" (click)="fromDate.toggle()" type="button">
+                          <i class="fa fa-calendar"></i>
+                        </button>
+                      </div>
+                    </div>
+
+                    
+                    <!-- <input id="from_date" name="from_date" class="form-control" required [(ngModel)]="formData.from_date" #from_date="ngModel"> -->
+                    <div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)" class="alert alert-danger">
+                      <div *ngIf="from_date.errors.required"> Default Price </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+
+                    <label for="to_date">To Date *</label>
+
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" [(ngModel)]="model" #to_date="ngModel" ngbDatepicker #toDate="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary no-shadow" (click)="toDate.toggle()" type="button">
+                          <i class="fa fa-calendar"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <!-- <input id="to_date" name="to_date" class="form-control" required [(ngModel)]="formData.to_date" #to_date="ngModel"> -->
+                    <div *ngIf="to_date.invalid && (to_date.dirty || to_date.touched)" class="alert alert-danger">
+                      <div *ngIf="to_date.errors.required"> to_date is required. </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <div class="form-group">
+                <label for="unit"> Unit *</label>
+                <select id="unit" name="unit" class="custom-select" required [(ngModel)]="formData.unit" #unit="ngModel">
+                  <option [value]="drop.code" *ngFor="let drop of lov?.units"> {{ drop.meaning }}</option>
+                </select>
+                <div *ngIf="unit.invalid && (unit.dirty || unit.touched)" class="alert alert-danger">
+                  <div *ngIf="unit.errors.required"> Unit is required. </div>
+                </div>
+              </div>
+            </div>
+        </form>
+
+        <!-- rows -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Search mode -->

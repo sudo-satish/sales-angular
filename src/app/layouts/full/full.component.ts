@@ -14,6 +14,7 @@ export class FullComponent implements OnInit {
     showSettings = false;
     showMinisidebar = false; 
     showDarktheme = false;
+    footerText = '© 2018 Sale-Module';
 
 	public config: PerfectScrollbarConfigInterface = {};
 
