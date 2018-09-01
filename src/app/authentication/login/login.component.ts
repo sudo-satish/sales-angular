@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Authentication } from '../authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from '../../shared/services/alert.service';
-import { Subscription } from '../../../../node_modules/rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-login',

@@ -20,7 +20,7 @@ export class ClientComponent extends UtComponent implements OnInit {
   resourceName = `Resource Name`;
   resourceURL = `/api/hrm/client`;
 
-  formData = {id: '', client_name:'', head_office_address: '', pan: '', gst: '', billto_client_id:'', active: 'Y', credit_limit: '', balance: '',  };
+  formData = {id: '', client_name:'', head_office_address: '', pan: '', gst: '', billto_client_id:'', active: 'Y', credit_limit: '', balance: '' };
 
   constructor(
     public http: HttpClient,

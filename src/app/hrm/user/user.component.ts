@@ -11,7 +11,6 @@ import { UtComponent } from '../../shared/components/resource-component/ut-compo
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-
 export class UserComponent extends UtComponent implements OnInit {
   formSubtitle = `My New Form Subtitle`;
   formTitle = `My new Form Title`;
@@ -21,14 +20,10 @@ export class UserComponent extends UtComponent implements OnInit {
 
   formData = { id: '', name: '', email: '', employee_code: '', email_official: '', designation_id: '', location_id: '', department_id: '', roles_id: '' };
 
-  // saveForm(form) {
-  //   console.log(' Save Form');
-  //   console.log(form);
-    
-  //   let values = form.value;
-  //   let url = this.resourceURL;
-
-  //   // this.http.post(url, values).subscribe(this.logResponse.bind(this), this.responseErrorHandler)
-  // }
-
+  constructor(
+    public http: HttpClient,
+    // private toastr: ToastrService
+  ) { 
+    super(http);
+  }
 }

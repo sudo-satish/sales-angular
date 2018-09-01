@@ -24,6 +24,7 @@ import { SpinnerComponent } from './shared/spinner.component';
 import { AuthInterceptor } from './authentication/auth.interceptor';
 import { ResourceComponentComponent } from './shared/components/resource-component/resource-component.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
+import { ToastrModule } from 'ngx-toastr';
 // import { UtComponent } from './shared/components/resource-component/ut-component/UtComponent';
 
 // import { NgxDatatableModule } from '@swimlane/ngx-datatable';
@@ -54,6 +55,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     FormsModule,
     HttpClientModule,
     NgbModule.forRoot(),
+    ToastrModule.forRoot(),
     RouterModule.forRoot(Approutes, { useHash: false }),  
     PerfectScrollbarModule
   ],

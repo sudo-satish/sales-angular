@@ -15,7 +15,7 @@ export abstract class UtComponent {
     lov;
     serverErrors;
 
-    formData = {  };
+    abstract formData = {  };
 
     constructor(
         public http: HttpClient,
