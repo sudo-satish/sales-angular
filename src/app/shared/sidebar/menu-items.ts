@@ -33,20 +33,20 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Stock', icon: '', class: 'nav-small-cap', label: '', labelClass: '', extralink: true, submenu: []
     }, {
-        path: '', title: 'Stock', icon: 'mdi mdi-bullseye', class: 'has-arrow', label: '', labelClass: '', extralink: false,
+        path: '', title: 'Stock', icon: 'mdi mdi-store', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
             { path: '/stock/tumbrow', title: 'Tumbrow', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     },
     
     {
-        path: '', title: 'sys', icon: 'mdi mdi-bullseye', class: 'has-arrow', label: '', labelClass: '', extralink: false,
+        path: '', title: 'sys', icon: 'mdi mdi-settings', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
             { path: '/sys/aureole-lookup', title: 'Lookup', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     },
     {
-        path: '', title: 'hrm', icon: 'mdi mdi-bullseye', class: 'has-arrow', label: '', labelClass: '', extralink: false,
+        path: '', title: 'hrm', icon: 'mdi mdi-account-edit', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
             { path: '/hrm/client', title: 'Client', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
             { path: '/hrm/user', title: 'User', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },

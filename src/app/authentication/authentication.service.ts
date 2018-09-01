@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 // import { CanActivate } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 @Injectable({
     providedIn: 'root',
 })
 export class Authentication  {
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(
+        private http: HttpClient, 
+        private router: Router,
+        private toastr: ToastrService
+    ) {
 
     }
 
@@ -66,6 +70,9 @@ export class Authentication  {
                 }
 
             }, (err) => {
+                if(err && err['error'] && err['error']['error']) {
+                    this.toastr.error(err['error']['error'], 'Invalid Credentials');
+                }
                 console.log(' Err => ', err);
             });
     }

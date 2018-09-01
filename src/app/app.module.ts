@@ -25,10 +25,7 @@ import { AuthInterceptor } from './authentication/auth.interceptor';
 import { ResourceComponentComponent } from './shared/components/resource-component/resource-component.component';
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ToastrModule } from 'ngx-toastr';
-// import { UtComponent } from './shared/components/resource-component/ut-component/UtComponent';
-
-// import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-// import { Ng2SmartTableModule } from 'ng2-smart-table';
+// import { UtComponentComponent } from './shared/components/resource-component/ut-component/ut-comoponent.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -46,11 +43,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SidebarComponent,
     BlankComponent,
     ResourceComponentComponent,
-    AlertComponent
+    AlertComponent,
+    // UtComponentComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
+    
     BrowserAnimationsModule,   
     FormsModule,
     HttpClientModule,

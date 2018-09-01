@@ -5,7 +5,7 @@
   <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
   <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
   <!-- <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button> -->
-  <!-- <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button> -->
+  <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)" [hidden]="hideFakeBtn">Fake</button>
   <!-- <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button> -->
   <!-- <button type="button" class="btn btn-warning">Warning</button> -->
   <!-- <button type="button" class="btn btn-danger">Danger</button> -->

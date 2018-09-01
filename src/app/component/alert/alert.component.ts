@@ -1,6 +1,7 @@
 import { Input, Component, OnInit } from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: '',
@@ -13,7 +14,9 @@ export class NgbdAlertBasic implements OnInit{
   public alerts: Array<IAlert> = [];
 
   private backup: Array<IAlert>;
-  constructor() {
+  constructor(
+    private toastr: ToastrService
+  ) {
     this.alerts.push({
       id: 1,
       type: 'success',
@@ -58,6 +61,13 @@ export class NgbdAlertBasic implements OnInit{
 
   public changeSuccessMessage() {
     this._success.next(`${new Date()} - Message successfully changed.`);
+  }
+
+  toastrMsg() {
+
+    console.log('asdfdsf');
+    
+    this.toastr.success('You are awesome!', 'Success!');
   }
 }
 

@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client',
@@ -21,12 +22,14 @@ export class ClientComponent extends UtComponent implements OnInit {
   resourceURL = `/api/hrm/client`;
 
   formData = {id: '', client_name:'', head_office_address: '', pan: '', gst: '', billto_client_id:'', active: 'Y', credit_limit: '', balance: '' };
-
+  fakeFormData = { id: null, client_name: 'Fake', head_office_address: 'Hrayana fake', pan: '2121454', gst: '54sdfdsf', billto_client_id: '', active: 'Y', credit_limit: '5000', balance: '25' };
+  
   constructor(
     public http: HttpClient,
-    public router: Router
+    public router: Router,
+    public toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   manageAddress(clientId) {

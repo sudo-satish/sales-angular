@@ -5,7 +5,7 @@ import { Authentication } from '../authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from '../../shared/services/alert.service';
 import { Subscription } from 'rxjs';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -22,7 +22,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         private fb: FormBuilder, 
         private authService: Authentication,
         private http: HttpClient,
-        private alert: AlertService
+        private alert: AlertService,
+        private toastr: ToastrService
     ) {}
 
     ngOnInit() {
@@ -54,8 +55,20 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
             .post(url, { email: email})
             .subscribe(response => {
                 this.message = response['status'];
+                console.log(response);
+                if (response['status_code'] == 403) {
+                    this.toastr.error(response['status'], '');
+                } 
+                
+                if (response['status_code'] == 200) {
+                    this.toastr.success(response['status'], '');
+                }
+                
             }, err => {
                 this.message = err['message']
+
+                // console.log();
+                
             })
     }
 

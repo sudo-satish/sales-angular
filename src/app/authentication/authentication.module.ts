@@ -13,7 +13,7 @@ import { Signup2Component } from './signup2/signup2.component';
 
 import { AuthenticationRoutes } from './authentication.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [ 
@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(AuthenticationRoutes),
+    ToastrModule.forRoot(),
     NgbModule
   ],
   declarations: [

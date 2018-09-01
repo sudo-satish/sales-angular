@@ -7,7 +7,8 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
-import { NgbDateStruct } from '../../../../node_modules/@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 const my = new Date();
 
@@ -30,9 +31,10 @@ export class PricingPlanComponent extends UtComponent implements OnInit {
   constructor(
     public http: HttpClient,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   init() {

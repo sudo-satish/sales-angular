@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user',
@@ -22,8 +23,9 @@ export class UserComponent extends UtComponent implements OnInit {
 
   constructor(
     public http: HttpClient,
+    public toastr: ToastrService
     // private toastr: ToastrService
   ) { 
-    super(http);
+    super(http, toastr);
   }
 }

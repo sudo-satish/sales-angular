@@ -22,6 +22,7 @@ import { NgbdtimepickerBasic } from './timepicker/timepicker.component';
 import { NgbdtypeheadBasic } from './typehead/typehead.component';
 import { CardsComponent } from './card/card.component';
 import { ButtonsComponent } from './buttons/buttons.component';
+import { ToastrModule  } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ButtonsComponent } from './buttons/buttons.component';
     FormsModule,
     ReactiveFormsModule,
     JsonpModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot(),
   ],
   declarations: [
     NgbdpregressbarBasic,

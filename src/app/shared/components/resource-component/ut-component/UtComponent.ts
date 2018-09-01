@@ -1,9 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import * as _ from 'lodash';
-import { Component } from "@angular/core";
-// import { ToastrService } from 'ngx-toastr';
+// import { Component, Injectable } from "@angular/core";
+import { ToastrService } from 'ngx-toastr';
+import { environment } from "../../../../../environments/environment";
 
 var data: any;
+// @Injectable({
+//     providedIn: 'root',
+//     i
+// })
 export abstract class UtComponent {
     formMode; // SEARCH, EDIT, NEW
     abstract formTitle; // title of form
@@ -13,14 +18,20 @@ export abstract class UtComponent {
     abstract resourceDescription;
     abstract resourceURL = `/api/hrm/client`;
     lov;
-    serverErrors;
 
-    abstract formData = {  };
+    environment = environment;
+    hideFakeBtn = environment.production;
 
+    serverErrors; // Servers errors for Fields.
+    
+    abstract formData = { };
+    fakeFormData = { }; // same as formData but to fill the fake data in form for faster development. 
+    
     constructor(
         public http: HttpClient,
-        // private toastr: ToastrService
-    ) { }
+        public toastr: ToastrService
+    ) { 
+    }
 
     ngOnInit() {
         this.init();
@@ -40,22 +51,25 @@ export abstract class UtComponent {
         let url = this.resourceURL;
         let action = `/get-lov`;
         url = url + action;
-        this.http.get(url).subscribe(response => { this.lov = response}, this.responseErrorHandler.bind(this))
+        this.http.get(url).subscribe(response => { this.lov = response}, this.lovErrorHandler.bind(this))
+    }
+
+    lovErrorHandler(error) {
+        console.log(error);
     }
 
     onFake(form) {
 
         console.log(form);
 
-        let formData = { id: null, client_name: 'Fake', head_office_address: 'Hrayana fake', pan: '2121454', gst: '54sdfdsf', billto_client_id: '', active: 'Y', credit_limit: '5000', balance: '25' };
+        // let formData = { id: null, client_name: 'Fake', head_office_address: 'Hrayana fake', pan: '2121454', gst: '54sdfdsf', billto_client_id: '', active: 'Y', credit_limit: '5000', balance: '25' };
+        let formData = this.fakeFormData;
         _.forEach(formData, (value, key) => {
             form.controls[key].setValue(value);
         })
     }
 
     logResponse(response) {
-
-        
         console.log(response);
     }
 
@@ -89,6 +103,11 @@ export abstract class UtComponent {
 
         this.http.put(url, values).subscribe(response => {
             this.afterUpdate(response);
+            if (response && response['message']) {
+                this.toastr.success(response['message'], '');
+            } else {
+                this.toastr.success('Updated Successfully', '');
+            }
             this.logResponse(response);
         }, this.responseErrorHandler.bind(this))
     }
@@ -101,6 +120,13 @@ export abstract class UtComponent {
 
         this.http.post(url, values).subscribe((response) => { 
             this.afterSave(response);
+            
+            if (response && response['message']) {
+                this.toastr.success(response['message'], '');
+            } else {
+                this.toastr.success('Saved Successfully', '');
+            }
+
             this.logResponse(response);
         }, this.responseErrorHandler.bind(this))
     }
@@ -113,24 +139,17 @@ export abstract class UtComponent {
     }
 
     onEdit($event, rowIndex, form) {
-        console.log(' $event => ', $event);
-        console.log(' rowIndex => ', rowIndex);
         this.formMode = "EDIT";
-
         let values = this.rows[rowIndex];
-
         this.populateForm(form, values);
     }
 
     populateForm(form, values) {
-        console.log(values);
-
         _.forEach(values, (value, key) => {
             if (form.controls[key]) {
                 form.controls[key].setValue(value);
             } else {
                 console.log(' Input not found => ', key);
-
             }
         })
     }
@@ -141,23 +160,22 @@ export abstract class UtComponent {
     }
 
     onNew($event, form) {
-        console.log($event);
         this.formMode = "NEW";
         form.reset();
     }
 
-    onEditConfirm($event) {
-        console.log(' Edit confirm => ', $event);
-    }
+    // onEditConfirm($event) {
+    //     console.log(' Edit confirm => ', $event);
+    // }
 
-    onCreateConfirm($event) {
-        $event.confirm.resolve();
-        console.log(' Create confirm => ', $event);
-    }
+    // onCreateConfirm($event) {
+    //     $event.confirm.resolve();
+    //     console.log(' Create confirm => ', $event);
+    // }
 
-    onDeleteConfirm($event) {
-        console.log(' Delete => ', $event);
-    }
+    // onDeleteConfirm($event) {
+    //     console.log(' Delete => ', $event);
+    // }
 
     onSearch() {
         this.formMode = 'SEARCH';
@@ -167,30 +185,26 @@ export abstract class UtComponent {
     fetchAllData() {
         let url = this.resourceURL;
         this.http.get(url).subscribe(this.manageGridData.bind(this), this.responseErrorHandler.bind(this))
-
-        // this.rows = data;
-        // this.temp = [...data];
-        // setTimeout(() => { this.loadingIndicator = false; }, 1500);
     }
 
     responseErrorHandler(error) {
         console.log(error);
+
+        if(error && error.error && error.error.message) {
+            this.toastr.error('Invalid Form', 'Oops!');
+        }
+
         if (error.error && error.error.errors) {
             console.log(error.error.errors);
-            
             this.serverErrors = error.error.errors;
         }
     }
 
     manageGridData(response) {
 
-        // console.log(this);
-
         data = response;
         this.rows = data;
         this.temp = [...data];
-
-        console.log(response);
 
         this.afterManageGridData(response);
     }
@@ -203,14 +217,14 @@ export abstract class UtComponent {
 
     editing = {};
     rows = [];
-    // temp = [...data];
     temp = [];
 
     updateValue(event, cell, rowIndex) {
-        console.log('inline editing rowIndex', rowIndex)
         this.editing[rowIndex + '-' + cell] = false;
         this.rows[rowIndex][cell] = event.target.value;
         this.rows = [...this.rows];
+
+        // Logic to update the row...
         console.log('UPDATED!', this.rows[rowIndex][cell]);
     }
 

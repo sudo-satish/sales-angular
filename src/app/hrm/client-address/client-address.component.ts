@@ -7,6 +7,7 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as _ from 'lodash';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client-address',
@@ -27,9 +28,10 @@ export class ClientAddressComponent extends UtComponent implements OnInit {
   constructor(
     public http: HttpClient,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public toastr: ToastrService
   ) {
-    super(http);
+    super(http, toastr);
   }
 
   init() {
