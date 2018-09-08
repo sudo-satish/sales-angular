@@ -13,6 +13,9 @@ import { ClientComponent } from './client/client.component';
 import { UserComponent } from './user/user.component';
 import { ClientAddressComponent } from './client-address/client-address.component';
 import { PricingPlanComponent } from './pricing-plan/pricing-plan.component';
+import { LocationComponent } from './location/location.component';
+import { DepartmentComponent } from './department/department.component';
+import { DesignationComponent } from './designation/designation.component';
 
 // import { TumbrowComponent } from './tumbrow/tumbrow.component';
 
@@ -32,7 +35,10 @@ import { PricingPlanComponent } from './pricing-plan/pricing-plan.component';
     ClientComponent,
     ClientAddressComponent,
     UserComponent,
-    PricingPlanComponent
+    PricingPlanComponent,
+    LocationComponent,
+    DepartmentComponent,
+    DesignationComponent,
   ]
 })
 

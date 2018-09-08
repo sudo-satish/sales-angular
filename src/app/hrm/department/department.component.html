@@ -1,0 +1,112 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
+  <!-- <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button> -->
+  <!-- <button type="button" class="btn btn-warning">Warning</button> -->
+  <!-- <button type="button" class="btn btn-danger">Danger</button> -->
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">{{ formTitle }}</h4>
+        <h6 class="card-subtitle"> {{ formSubtitle }}
+        <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
+        </h6>
+
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') ">
+          <div>
+
+            <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="name">{{ startCase('name') }} *</label>
+                  <input id="name" name="name" class="form-control" required [(ngModel)]="formData.name" #name="ngModel">
+                  <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                    <div *ngIf="name.errors.required"> {{ startCase('name') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="order">{{ startCase('order') }} *</label>
+                  <input id="order" name="order" class="form-control" required [(ngModel)]="formData.order" #order="ngModel">
+                  <div *ngIf="order.invalid && (order.dirty || order.touched)" class="alert alert-danger">
+                    <div *ngIf="order.errors.required"> {{ startCase('order') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="active">{{ startCase('active') }} *</label>
+                  <input id="active" name="active" class="form-control" required [(ngModel)]="formData.active" #active="ngModel">
+                  <div *ngIf="active.invalid && (active.dirty || active.touched)" class="alert alert-danger">
+                    <div *ngIf="active.errors.required"> {{ startCase('active') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div class="search" *ngIf=" (formMode == 'SEARCH') ">
+
+          <!-- Search -->
+          <div class="card" *ngIf="rows.length > 0">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Editing Option</h4> -->
+              <!-- <h5 class="card-subtitle">This is the editing Data table option you can double click on text</h5> -->
+
+              <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'"
+                [rows]="rows">
+
+                <ngx-datatable-column name="Edit">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="onEdit($event, rowIndex, form)"> Edit </button>
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="startCase('name')" prop="name">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true" *ngIf="!editing[rowIndex + '-name']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'name', rowIndex)" *ngIf="editing[rowIndex+ '-name']" type="text"
+                      [value]="value" />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [name]="startCase('order')" prop="order">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-order'] = true" *ngIf="!editing[rowIndex + '-order']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'order', rowIndex)" *ngIf="editing[rowIndex+ '-order']"
+                      type="text" [value]="value" />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [name]="startCase('active')" prop="active">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-active'] = true" *ngIf="!editing[rowIndex + '-active']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'active', rowIndex)" *ngIf="editing[rowIndex+ '-active']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search mode -->

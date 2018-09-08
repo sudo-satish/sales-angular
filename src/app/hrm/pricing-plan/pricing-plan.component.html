@@ -25,7 +25,7 @@
         <h4 class="m-b-0 text-white">{{cols?.item_name}} | {{ getMeaningFromCode(lov?.units, cols?.unit) }}</h4>
       </div>
       <div class="card-body">
-        <h3 class="card-title">{{ cols?.from_date | date }} -to- {{ cols?.from_date | date }} </h3>
+        <h3 class="card-title">{{ cols?.from_date | date }} -to- {{ cols?.to_date | date }} </h3>
         <h6 class="card-subtitle mb-2 text-muted">{{ cols?.gsm }}</h6>
         <p class="card-text"> Default Price : {{cols?.default_price}}, Actual Price : {{cols?.actual_price}}.</p>
         <a href="javascript:void(0)" class="btn btn-primary" (click)="this.populateForm(form, cols)">Edit</a>
@@ -57,7 +57,7 @@
                     <label for="item_name">Item Name *</label>
                     <input id="item_name" name="item_name" class="form-control" required [(ngModel)]="formData.item_name" #item_name="ngModel">
                     <div *ngIf="item_name.invalid && (item_name.dirty || item_name.touched)" class="alert alert-danger">
-                      <div *ngIf="item_name.errors.required"> Address Line 1 </div>
+                      <div *ngIf="item_name.errors.required"> Item name is required </div>
                     </div>
                   </div>
                 </div>
@@ -99,15 +99,13 @@
 
                     <label for="from_date">From Date *</label>
                     <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd" id="from_date" name="from_date" [(ngModel)]="model" #from_date="ngModel" ngbDatepicker #fromDate="ngbDatepicker">
+                      <input class="form-control" placeholder="yyyy-mm-dd" id="from_date" ngModel name="from_date" #from_date="ngModel" ngbDatepicker #fromDate="ngbDatepicker">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary no-shadow" (click)="fromDate.toggle()" type="button">
                           <i class="fa fa-calendar"></i>
                         </button>
                       </div>
                     </div>
-
-                    
                     <!-- <input id="from_date" name="from_date" class="form-control" required [(ngModel)]="formData.from_date" #from_date="ngModel"> -->
                     <div *ngIf="from_date.invalid && (from_date.dirty || from_date.touched)" class="alert alert-danger">
                       <div *ngIf="from_date.errors.required"> Default Price </div>
@@ -120,7 +118,7 @@
                     <label for="to_date">To Date *</label>
 
                     <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" [(ngModel)]="model" #to_date="ngModel" ngbDatepicker #toDate="ngbDatepicker">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="to_date" ngModel #to_date="ngModel" ngbDatepicker #toDate="ngbDatepicker">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary no-shadow" (click)="toDate.toggle()" type="button">
                           <i class="fa fa-calendar"></i>

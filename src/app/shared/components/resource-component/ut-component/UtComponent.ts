@@ -38,7 +38,10 @@ export abstract class UtComponent {
     }
 
     init() {
-        this.formMode = 'NEW';
+        
+        this.formMode = this.formMode || 'NEW';
+        // this.formMode = 'SEARCH';
+
         this.formTitle = 'Tumbrow';
         this.formSubtitle = 'Form subtitle';
 
@@ -75,9 +78,6 @@ export abstract class UtComponent {
 
     submit(form) {
 
-        console.log(form);
-        console.log(form.value);
-
         if (form.value.id && form.value.id !== '') {
             this.updateForm(form);
         } else {
@@ -86,7 +86,6 @@ export abstract class UtComponent {
     }
 
     updateForm(form) {
-        console.log(' Update Form');
 
         let values = form.value;
         let url = this.resourceURL;
@@ -254,5 +253,9 @@ export abstract class UtComponent {
         } else {
             return code;
         }
+    }
+
+    startCase(word) {
+        return _.startCase(word);
     }
 }

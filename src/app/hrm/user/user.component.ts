@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
 import { ToastrService } from 'ngx-toastr';
+import { Authentication } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-user',
@@ -19,13 +20,15 @@ export class UserComponent extends UtComponent implements OnInit {
   resourceName = `Resource Name`;
   resourceURL = `/api/hrm/user`;
 
-  formData = { id: '', name: '', email: '', employee_code: '', email_official: '', designation_id: '', location_id: '', department_id: '', roles_id: '' };
+  formData = { id: '', client_id:'', name: '', email: '', employee_code: '', email_official: '', designation_id: '', location_id: '', department_id: '', roles_id: '' };
 
   constructor(
     public http: HttpClient,
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    public _auth: Authentication
     // private toastr: ToastrService
   ) { 
     super(http, toastr);
+    this.formData.client_id = _auth.getUser().client_id;
   }
 }

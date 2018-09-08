@@ -25,8 +25,9 @@
             <!-- S no-->
 
             <input type="hidden" name="id" [(ngModel)]="formData.id">
+            <input type="hidden" name="client_id" [(ngModel)]="formData.client_id">
             <div class="row">
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="name">Name *</label>
                   <input id="name" name="name" class="form-control" required [(ngModel)]="formData.name" #name="ngModel">
@@ -35,7 +36,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="email">Email *</label>
                   <input id="email" name="email" type="email" class="form-control" required [(ngModel)]="formData.email" #email="ngModel">
@@ -52,7 +53,7 @@
             
 
             <div class="row">
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="email_official">Official Email</label>
                   <input id="email_official" name="email_official" type="email" class="form-control" required [(ngModel)]="formData.email_official"
@@ -70,7 +71,7 @@
 
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label for="employee_code">Employee Code</label>
                   <input id="employee_code" name="employee_code" class="form-control" required [(ngModel)]="formData.employee_code" #employee_code="ngModel">
@@ -84,7 +85,7 @@
             </div>
 
             <div class="row">
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label>Designation *</label>
                   <select name="designation_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.designation_id"
@@ -102,7 +103,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label>Location *</label>
                   <select name="location_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.location_id"
@@ -119,7 +120,7 @@
             </div>
             
             <div class="row">
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label>Department *</label>
                   <select name="department_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.department_id"
@@ -133,7 +134,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-6">
+              <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                   <label>Role *</label>
                   <select name="roles_id" required class="custom-select col-12" id="inlineFormCustomSelect" [(ngModel)]="formData.roles_id"

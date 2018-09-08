@@ -48,8 +48,11 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'hrm', icon: 'mdi mdi-account-edit', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
-            { path: '/hrm/client', title: 'Client', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
-            { path: '/hrm/user', title: 'User', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/client', title: 'Client', icon: 'mdi mdi-account-convert', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/user', title: 'User', icon: 'mdi mdi-account-multiple-plus', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/location', title: 'Location', icon: 'mdi mdi-home-map-marker', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/department', title: 'Department', icon: 'mdi mdi-content-duplicate', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/hrm/designation', title: 'Designation', icon: 'mdi mdi-certificate', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     }
      

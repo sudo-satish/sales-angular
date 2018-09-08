@@ -10,7 +10,7 @@ declare var $: any;
   templateUrl: './sidebar.component.html'
   
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, AfterViewInit {
 	
     user;
 
@@ -56,6 +56,13 @@ export class SidebarComponent implements OnInit {
                     $("body").trigger("resize");
                     $("#main-wrapper").addClass("mini-sidebar");
                 }
+
+                // $('.collapse.in').on('click', function () {
+                //     console.log('hjhjhjhkhk');
+                    
+                //     $("body").trigger("resize");
+                //     $("#main-wrapper").addClass("mini-sidebar");
+                // })
             });
 
         });
@@ -66,4 +73,17 @@ export class SidebarComponent implements OnInit {
     setUser() {
         this.user = this.authService.getUser();
     }
+
+    ngAfterViewInit(){
+
+        $(function () {
+            $('.collapse').on('click', function () {
+                if($(this).hasClass('in')) {
+                    $("body").trigger("resize");
+                    $("#main-wrapper").addClass("mini-sidebar");
+                }
+            })
+        })
+    }
+    
 }

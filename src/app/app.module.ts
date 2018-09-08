@@ -13,7 +13,7 @@ import { FullComponent } from './layouts/full/full.component';
 import { NavigationComponent } from './shared/header-navigation/navigation.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDateParserFormatter, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -26,6 +26,9 @@ import { ResourceComponentComponent } from './shared/components/resource-compone
 import { AlertComponent } from './shared/components/alert/alert.component';
 import { ToastrModule } from 'ngx-toastr';
 // import { UtComponentComponent } from './shared/components/resource-component/ut-component/ut-comoponent.component';
+import { NgbDateFRParserFormatter } from "./shared/helpers/ngb-date-fr-parser-formatter";
+import { NgbDateModelAdapter } from './shared/helpers/ngb-date-model-adapter';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -61,6 +64,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: NgbDateParserFormatter, useClass: NgbDateFRParserFormatter },
+    { provide: NgbDateAdapter, useClass: NgbDateModelAdapter },
 ],
   bootstrap: [AppComponent]
 })

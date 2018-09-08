@@ -3,6 +3,9 @@ import { ClientComponent } from './client/client.component';
 import { UserComponent } from './user/user.component';
 import { ClientAddressComponent } from './client-address/client-address.component';
 import { PricingPlanComponent } from './pricing-plan/pricing-plan.component';
+import { LocationComponent } from './location/location.component';
+import { DepartmentComponent } from './department/department.component';
+import { DesignationComponent } from './designation/designation.component';
 
 
 export const HrmRoutes: Routes = [
@@ -40,7 +43,31 @@ export const HrmRoutes: Routes = [
         title: 'Pricing Plan',
         urls: [{title: 'Dashboard', url: '/dashboard'}, {title: 'Progressbar'}]
       }
-    }, 
+    },
+    {
+      path: 'location',
+      component: LocationComponent,
+      data: {
+        title: 'Location',
+        urls: [{title: 'Hrm', url: '/location'}]
+      }
+    },
+    {
+      path: 'department',
+      component: DepartmentComponent,
+      data: {
+        title: 'department',
+        urls: [{ title: 'Hrm', url: '/department'}]
+      }
+    },
+    {
+      path: 'designation',
+      component: DesignationComponent,
+      data: {
+        title: 'designation',
+        urls: [{ title: 'Hrm', url: '/designation'}]
+      }
+    },
    
     ]
   }

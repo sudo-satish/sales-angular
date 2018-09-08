@@ -67,7 +67,7 @@
             
             <div class="form-group">
               <label for="billto_client_id">Bill To</label>
-              <input id="billto_client_id" name="billto_client_id" class="form-control"  [(ngModel)]="formData.billto_client_id" #billto_client_id="ngModel">
+              <input id="billto_client_id" name="billto_client_id" [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="inputFormatter" class="form-control" [(ngModel)]="formData.billto_client_id" #billto_client_id="ngModel">
               <div *ngIf="billto_client_id.invalid && (billto_client_id.dirty || billto_client_id.touched)" class="alert alert-danger">
                 <div *ngIf="billto_client_id.errors.required"> Bill To is required. </div>
                 <div *ngIf="billto_client_id.errors.minlength"> Bill To must be at least 4 characters long. </div>
@@ -105,7 +105,7 @@
             
             <div class="form-group">
               <label for="balance">Balance</label>
-              <input id="balance" name="balance" class="form-control" [(ngModel)]="formData.balance" #balance="ngModel">
+              <input id="balance" name="balance" readonly class="form-control" [(ngModel)]="formData.balance" #balance="ngModel">
               <div *ngIf="balance.invalid && (balance.dirty || balance.touched)" class="alert alert-danger">
                 <div *ngIf="balance.errors.required"> Balance is required. </div>
                 <div *ngIf="balance.errors.minlength"> Balance must be at least 4 characters long. </div>

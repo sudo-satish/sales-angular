@@ -7,6 +7,21 @@ import { ValueTransformer } from '@angular/compiler/src/util';
 import { UtComponent } from '../../shared/components/resource-component/ut-component/UtComponent';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+
+import { tap, map, switchMap, distinctUntilChanged, debounceTime, catchError } from 'rxjs/operators';
+
+
+
+const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+  'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
+  'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine',
+  'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana',
+  'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
+  'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island',
+  'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
+  'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
 
 @Component({
   selector: 'app-client',
@@ -20,16 +35,76 @@ export class ClientComponent extends UtComponent implements OnInit {
   resourceDescription = `Resource Description`;
   resourceName = `Resource Name`;
   resourceURL = `/api/hrm/client`;
-
+  formMode = 'SEARCH';
   formData = {id: '', client_name:'', head_office_address: '', pan: '', gst: '', billto_client_id:'', active: 'Y', credit_limit: '', balance: '' };
   fakeFormData = { id: null, client_name: 'Fake', head_office_address: 'Hrayana fake', pan: '2121454', gst: '54sdfdsf', billto_client_id: '', active: 'Y', credit_limit: '5000', balance: '25' };
   
+  searching = false;
+  searchFailed = false;
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      // map(term => term.length < 2 ? []
+      //   : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10)));
+      tap(() => this.searching = true),
+      switchMap(term =>
+        this.searchClient(term).pipe(
+          tap(() => this.searchFailed = false),
+          catchError(() => {
+            this.searchFailed = true;
+            return of([]);
+          }))
+      ),
+      tap(() => this.searching = false)
+        );
+  
+  formatter = (x) => x.client_name;
+  inputFormatter = (x) => x.client_name;
+
+  searchClient(term) {
+    console.log(term);
+    // return ['satish', 'gupta'];
+    let url = this.resourceURL +'/search-client';
+    url += '?searchTxt=' + term;
+
+    return this.http.get(url);
+    // return of(['satish','Gupta']);
+  }
+
+  // saveForm(form) {
+  //   this.preSave(form);
+  //   console.log(form.value);
+    
+  // }
+
+  // updateForm(form) {
+  //   console.log(form.value);
+  //   return true;
+  // }
+
+
   constructor(
     public http: HttpClient,
     public router: Router,
     public toastr: ToastrService
   ) {
     super(http, toastr);
+  }
+
+  init() {
+
+    super.init();
+    this.onSearch();
+  }
+
+
+  getBillTo($event) {
+
+      
+    console.log($event.target.value);
+    
   }
 
   manageAddress(clientId) {
