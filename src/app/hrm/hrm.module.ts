@@ -16,6 +16,7 @@ import { PricingPlanComponent } from './pricing-plan/pricing-plan.component';
 import { LocationComponent } from './location/location.component';
 import { DepartmentComponent } from './department/department.component';
 import { DesignationComponent } from './designation/designation.component';
+import { ClientFullComponent } from './client-full/client-full.component';
 
 // import { TumbrowComponent } from './tumbrow/tumbrow.component';
 
@@ -39,6 +40,7 @@ import { DesignationComponent } from './designation/designation.component';
     LocationComponent,
     DepartmentComponent,
     DesignationComponent,
+    ClientFullComponent,
   ]
 })
 

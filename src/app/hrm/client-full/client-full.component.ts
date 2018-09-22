@@ -13,12 +13,12 @@ import { tap, map, switchMap, distinctUntilChanged, debounceTime, catchError } f
 
 
 @Component({
-  selector: 'app-client',
-  templateUrl: './client.component.html',
-  styleUrls: ['./client.component.css']
+  selector: 'app-client-full',
+  templateUrl: './client-full.component.html',
+  styleUrls: ['./client-full.component.css']
 })
 
-export class ClientComponent extends UtComponent implements OnInit {
+export class ClientFullComponent extends UtComponent implements OnInit {
   formSubtitle = `My New Form Subtitle`;
   formTitle = `My new Form Title`;
   resourceDescription = `Resource Description`;
@@ -89,6 +89,13 @@ export class ClientComponent extends UtComponent implements OnInit {
   }
 
 
+  getBillTo($event) {
+
+      
+    console.log($event.target.value);
+    
+  }
+
   manageAddress(clientId) {
     this.router.navigate(['hrm/client-address', clientId]);
   }
@@ -104,14 +111,6 @@ export class ClientComponent extends UtComponent implements OnInit {
     this.http
       .get(url)
       .subscribe(this.logResponse.bind(this), this.responseErrorHandler.bind(this))
-  }
-
-  calculateBalance(form: FormGroup) {
-    let creditLimit = form.controls['credit_limit'].value;
-    // Logic to calculate balance
-    let balance = creditLimit;
-
-    form.controls['balance'].setValue(balance);
   }
 
 }

@@ -42,11 +42,11 @@ export abstract class UtComponent {
         this.formMode = this.formMode || 'NEW';
         // this.formMode = 'SEARCH';
 
-        this.formTitle = 'Tumbrow';
-        this.formSubtitle = 'Form subtitle';
+        this.formTitle = this.formTitle || 'Tumbrow';
+        this.formSubtitle = this.formSubtitle || 'Form subtitle';
 
-        this.resourceName = 'Tumbrow';
-        this.resourceDescription = 'Tumbrow Search';
+        this.resourceName = this.resourceName || 'Tumbrow';
+        this.resourceDescription = this.resourceDescription || 'Tumbrow Search';
         this.fetchLOV();
     }
 

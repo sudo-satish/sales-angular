@@ -6,6 +6,7 @@ import { PricingPlanComponent } from './pricing-plan/pricing-plan.component';
 import { LocationComponent } from './location/location.component';
 import { DepartmentComponent } from './department/department.component';
 import { DesignationComponent } from './designation/designation.component';
+import { ClientFullComponent } from './client-full/client-full.component';
 
 
 export const HrmRoutes: Routes = [
@@ -19,7 +20,15 @@ export const HrmRoutes: Routes = [
         title: 'Client',
         urls: [{title: 'Dashboard', url: '/dashboard'}, {title: 'Progressbar'}]
       }
-    }, 
+    },
+    {
+      path: 'client-full',
+        component: ClientFullComponent,
+      data: {
+        title: 'Client Full',
+        urls: [{title: 'Client Full', url: '/client-full'}, {title: 'Progressbar'}]
+      }
+    },
     {
       path: 'user',
         component: UserComponent,
