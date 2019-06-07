@@ -23,7 +23,8 @@
             "styles": [
               "src/styles.css",
               "src/assets/scss/style.scss",
-              "node_modules/ngx-toastr/toastr.css"
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

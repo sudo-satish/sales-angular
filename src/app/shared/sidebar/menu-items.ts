@@ -36,6 +36,15 @@ export const ROUTES: RouteInfo[] = [
         path: '', title: 'Stock', icon: 'mdi mdi-store', class: 'has-arrow', label: '', labelClass: '', extralink: false,
         submenu: [
             { path: '/stock/tumbrow', title: 'Tumbrow', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+            { path: '/stock/item', title: 'Item', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
+        ]
+    },
+    {
+        path: '', title: 'Sales', icon: '', class: 'nav-small-cap', label: '', labelClass: '', extralink: true, submenu: []
+    }, {
+        path: '', title: 'Sales', icon: 'mdi mdi-store', class: 'has-arrow', label: '', labelClass: '', extralink: false,
+        submenu: [
+            { path: '/sales/sales-order', title: 'Order', icon: '', class: '', label: '', labelClass: '', extralink: false, submenu: [] },
         ]
     },
     

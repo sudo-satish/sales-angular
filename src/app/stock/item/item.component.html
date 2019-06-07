@@ -1,0 +1,164 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
+  <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button>
+  <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button>
+</div>
+
+<div class="row" >
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+            <input type="hidden" name="id" #id="ngModel" ngModel>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="item_name">{{ startCase('item_name') }} *</label>
+                  <input id="item_name" name="item_name" class="form-control" required ngModel #item_name="ngModel" (change)="populateFields($event, form)">
+                  <div *ngIf="item_name.invalid && (item_name.dirty || item_name.touched)" class="alert alert-danger">
+                    <div *ngIf="item_name.errors.required"> {{ startCase('item_name') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="item_code">{{ startCase('item_code') }} *</label>
+                  <input id="item_code" name="item_code" class="form-control" required ngModel readonly #item_code="ngModel">
+                  <div *ngIf="item_code.invalid && (item_code.dirty || item_code.touched)" class="alert alert-danger">
+                    <div *ngIf="item_code.errors.required"> {{ startCase('item_code') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="gst">{{ startCase('gst') }} *</label>
+                  <input id="gst" name="gst" class="form-control" required ngModel #gst="ngModel">
+                  <div *ngIf="gst.invalid && (gst.dirty || gst.touched)" class="alert alert-danger">
+                    <div *ngIf="gst.errors.required"> {{ startCase('gst') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6" *ngIf="item_name.value">
+                <div class="form-group">
+
+                  <label for="bf">{{ startCase('bf') }} *</label>
+                  <angular2-multiselect id="bf" [data]="lov?.BF" #bf="ngModel" [settings]="dropdownSettings" [(ngModel)]="selectedBF" class="custom-select" name="bf" required (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelectBF($event)"
+                    (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+
+                  
+                  <!-- <select id="bf" name="bf" required ngModel multiselect #bf="ngModel" class="custom-select" (change)="selectBF(bf)">
+                    <option [value]="bf.code" *ngFor="let bf of lov?.BF" >{{bf.meaning}}</option>
+                  </select> -->
+                  <div *ngIf="bf.invalid && (bf.dirty || bf.touched)" class="alert alert-danger">
+                    <div *ngIf="bf.errors.required"> {{ startCase('bf') }} is required. </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="col-md-6" *ngIf="form.value.bf && form.value.bf.length != 0">
+                <div class="form-group">
+                  <label for="gsm">{{ startCase('gsm') }} *</label>
+
+                  <angular2-multiselect id="gsm" [data]="lov?.GSM" #gsm="ngModel" [settings]="dropdownSettings" [(ngModel)]="selectedGSM"
+                    class="custom-select" name="gsm" required (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelectGSM($event)"
+                    (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+
+                  <!-- <select id="gsm" name="gsm" required multiselect ngModel #gsm="ngModel" class="custom-select">
+                    <option [value]="gsm.code" *ngFor="let gsm of lov?.GSM">{{gsm.meaning}}</option>
+                  </select> -->
+
+                  <div *ngIf="gsm.invalid && (gsm.dirty || gsm.touched)" class="alert alert-danger">
+                    <div *ngIf="gsm.errors.required"> {{ startCase('gsm') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <table class="table table-striped" *ngIf="selectedGSM && selectedGSM.length != 0 && selectedBF.length != 0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th *ngFor="let gsm of selectedGSM">{{gsm.meaning}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let bf of selectedBF">
+                    <td>{{bf.meaning }}</td>
+                    <td [attr.gsm]="gsm.code" *ngFor="let gsm of selectedGSM">
+                      <input [attr.gsm]="gsm.code" [attr.id]="gsm.code+bf.code" [attr.bf]="bf.code" ngModel name="price${{gsm.code}}${{bf.code}}" class="form-control" required placeholder="Enter price here...">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+          </div>
+        </form>
+
+        <div class="search" *ngIf=" (formMode == 'SEARCH') ">
+        
+          <!-- Search -->
+          <div class="card" *ngIf="rows.length > 0">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Editing Option</h4> -->
+              <!-- <h5 class="card-subtitle">This is the editing Data table option you can double click on text</h5> -->
+        
+              <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="'force'"
+                [footerHeight]="50" [rowHeight]="'auto'" [rows]="rows">
+        
+                <ngx-datatable-column name="Edit">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="onEdit($event, rowIndex, form)"> Edit </button>
+                  </ng-template>
+                </ngx-datatable-column>
+        
+                <ngx-datatable-column name="Item name" prop="item_name">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-item_name'] = true" *ngIf="!editing[rowIndex + '-item_name']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'item_name', rowIndex)" *ngIf="editing[rowIndex+ '-item_name']"
+                      type="text" [value]="value" />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="Item Code" prop="item_code">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-item_code'] = true" *ngIf="!editing[rowIndex + '-item_code']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'item_code', rowIndex)" *ngIf="editing[rowIndex+ '-item_code']"
+                      type="text" [value]="value" />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column name="GST" prop="gst">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gst'] = true" *ngIf="!editing[rowIndex + '-gst']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'gst', rowIndex)" *ngIf="editing[rowIndex+ '-gst']" type="text"
+                      [value]="value" />
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Search mode -->

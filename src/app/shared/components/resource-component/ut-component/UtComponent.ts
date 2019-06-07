@@ -3,6 +3,8 @@ import * as _ from 'lodash';
 // import { Component, Injectable } from "@angular/core";
 import { ToastrService } from 'ngx-toastr';
 import { environment } from "../../../../../environments/environment";
+import { ViewChildren, QueryList } from "@angular/core";
+import { NgForm } from "@angular/forms";
 
 var data: any;
 // @Injectable({
@@ -27,6 +29,8 @@ export abstract class UtComponent {
     abstract formData = { };
     fakeFormData = { }; // same as formData but to fill the fake data in form for faster development. 
     
+    @ViewChildren('form') formQuery: QueryList<any>; 
+
     constructor(
         public http: HttpClient,
         public toastr: ToastrService
@@ -48,6 +52,13 @@ export abstract class UtComponent {
         this.resourceName = this.resourceName || 'Tumbrow';
         this.resourceDescription = this.resourceDescription || 'Tumbrow Search';
         this.fetchLOV();
+        
+    }
+
+    ngAfterViewInit() {
+        if (this.formMode == 'NEW') {
+            this.onNew('', this.formQuery.first);
+        }
     }
 
     fetchLOV() {
@@ -62,8 +73,6 @@ export abstract class UtComponent {
     }
 
     onFake(form) {
-
-        console.log(form);
 
         // let formData = { id: null, client_name: 'Fake', head_office_address: 'Hrayana fake', pan: '2121454', gst: '54sdfdsf', billto_client_id: '', active: 'Y', credit_limit: '5000', balance: '25' };
         let formData = this.fakeFormData;
@@ -87,8 +96,9 @@ export abstract class UtComponent {
 
     updateForm(form) {
 
-        let values = form.value;
-        let url = this.resourceURL;
+        // let values = form.value;
+        let values = this.getUpdateValue(form);
+        let url = this.getUpdateUrl(); /* this.resourceURL; */
 
         if (form.value.id && form.value.id !== '') {
 
@@ -114,8 +124,8 @@ export abstract class UtComponent {
     saveForm(form) {
         console.log(' Save Form');
 
-        let values = form.value;
-        let url = this.resourceURL;
+        let values = this.getSaveValue(form);
+        let url = this.getSaveUrl(); /* this.resourceURL; */
 
         this.http.post(url, values).subscribe((response) => { 
             this.afterSave(response);
@@ -128,6 +138,22 @@ export abstract class UtComponent {
 
             this.logResponse(response);
         }, this.responseErrorHandler.bind(this))
+    }
+
+    getSaveValue(form: NgForm) {
+        return form.value;
+    }
+
+    getSaveUrl() {
+        return this.resourceURL;
+    }
+    
+    getUpdateValue(form: NgForm) {
+        return form.value;
+    }
+
+    getUpdateUrl() {
+        return this.resourceURL;
     }
 
     afterUpdate(response) {
@@ -144,6 +170,7 @@ export abstract class UtComponent {
     }
 
     populateForm(form, values) {
+
         _.forEach(values, (value, key) => {
             if (form.controls[key]) {
                 form.controls[key].setValue(value);
@@ -161,7 +188,18 @@ export abstract class UtComponent {
     onNew($event, form) {
         this.formMode = "NEW";
         form.reset();
+
+        // Because even it is called in afterViewInit it take some time to bind all controls to the form.
+        setTimeout(() => {
+            this.populateForm(form, this.formData);
+        }, 10)
+        this.afterNew(form, this.formData);
     }
+
+    afterNew(form, formData) {
+        
+    }
+
 
     // onEditConfirm($event) {
     //     console.log(' Edit confirm => ', $event);
@@ -224,7 +262,6 @@ export abstract class UtComponent {
         this.rows = [...this.rows];
 
         // Logic to update the row...
-        console.log('UPDATED!', this.rows[rowIndex][cell]);
     }
 
 

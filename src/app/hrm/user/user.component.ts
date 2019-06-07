@@ -20,7 +20,7 @@ export class UserComponent extends UtComponent implements OnInit {
   resourceName = `Resource Name`;
   resourceURL = `/api/hrm/user`;
 
-  formData = { id: '', client_id:'', name: '', email: '', employee_code: '', email_official: '', designation_id: '', location_id: '', department_id: '', roles_id: '' };
+  formData = { id: '', client_id:'', name: 'Satish', email: '', employee_code: '', email_official: '', designation_id: '', location_id: '', department_id: '', roles_id: '' };
 
   constructor(
     public http: HttpClient,

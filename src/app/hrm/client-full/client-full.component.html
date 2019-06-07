@@ -29,7 +29,7 @@
 
             <div class="form-group">
               <label for="client_name">Client Name *</label>
-              <input id="client_name" name="client_name" class="form-control" required [(ngModel)]="formData.client_name" #client_name="ngModel">
+              <input id="client_name" name="client_name" class="form-control" required ngModel #client_name="ngModel">
               <div *ngIf="client_name.invalid && (client_name.dirty || client_name.touched)" class="alert alert-danger">
                 <div *ngIf="client_name.errors.required"> Client Name is required. </div>
               </div>
@@ -37,7 +37,7 @@
 
             <div class="form-group">
               <label for="head_office_address"> Head Office Address *</label>
-              <input id="head_office_address" name="head_office_address" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.head_office_address" #head_office_address="ngModel">
+              <input id="head_office_address" name="head_office_address" class="form-control" required minlength="4" forbiddenName="bob" ngModel #head_office_address="ngModel">
               <div *ngIf="head_office_address.invalid && (head_office_address.dirty || head_office_address.touched)" class="alert alert-danger">
                 <div *ngIf="head_office_address.errors.required"> Head Office Address is required. </div>
                 <div *ngIf="head_office_address.errors.minlength"> Head Office Address must be at least 4 characters long. </div>
@@ -47,7 +47,7 @@
             
             <div class="form-group">
               <label for="pan">PAN *</label>
-              <input id="pan" name="pan" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.pan" #pan="ngModel">
+              <input id="pan" name="pan" class="form-control" required minlength="4" forbiddenName="bob" ngModel #pan="ngModel">
               <div *ngIf="pan.invalid && (pan.dirty || pan.touched)" class="alert alert-danger">
                 <div *ngIf="pan.errors.required"> PAN is required. </div>
                 <div *ngIf="pan.errors.minlength"> PAN must be at least 4 characters long. </div>
@@ -57,7 +57,7 @@
             
             <div class="form-group">
               <label for="gst">GST *</label>
-              <input id="gst" name="gst" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.gst" #gst="ngModel">
+              <input id="gst" name="gst" class="form-control" required minlength="4" forbiddenName="bob" ngModel #gst="ngModel">
               <div *ngIf="gst.invalid && (gst.dirty || gst.touched)" class="alert alert-danger">
                 <div *ngIf="gst.errors.required"> GST is required. </div>
                 <div *ngIf="gst.errors.minlength"> GST must be at least 4 characters long. </div>
@@ -67,7 +67,7 @@
             
             <div class="form-group">
               <label for="billto_client_id">Bill To</label>
-              <input id="billto_client_id" name="billto_client_id" [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="inputFormatter" class="form-control" [(ngModel)]="formData.billto_client_id" #billto_client_id="ngModel">
+              <input id="billto_client_id" name="billto_client_id" [ngbTypeahead]="search" [resultFormatter]="formatter" [inputFormatter]="inputFormatter" class="form-control" ngModel #billto_client_id="ngModel">
               <div *ngIf="billto_client_id.invalid && (billto_client_id.dirty || billto_client_id.touched)" class="alert alert-danger">
                 <div *ngIf="billto_client_id.errors.required"> Bill To is required. </div>
                 <div *ngIf="billto_client_id.errors.minlength"> Bill To must be at least 4 characters long. </div>
@@ -81,7 +81,7 @@
               
 
               <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
-                <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" [(ngModel)]="formData.active">
+                <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" ngModel>
                 <label class="custom-control-label" for="active">Active</label>
               </div>
 
@@ -95,7 +95,7 @@
             
             <div class="form-group">
               <label for="credit_limit">Credit Limit</label>
-              <input id="credit_limit" name="credit_limit" class="form-control" [(ngModel)]="formData.credit_limit" #credit_limit="ngModel">
+              <input id="credit_limit" name="credit_limit" class="form-control" ngModel #credit_limit="ngModel">
               <div *ngIf="credit_limit.invalid && (credit_limit.dirty || credit_limit.touched)" class="alert alert-danger">
                 <div *ngIf="credit_limit.errors.required"> Credit Limit is required. </div>
                 <div *ngIf="credit_limit.errors.minlength"> Credit Limit must be at least 4 characters long. </div>
@@ -105,7 +105,7 @@
             
             <div class="form-group">
               <label for="balance">Balance</label>
-              <input id="balance" name="balance" readonly class="form-control" [(ngModel)]="formData.balance" #balance="ngModel">
+              <input id="balance" name="balance" readonly class="form-control" ngModel #balance="ngModel">
               <div *ngIf="balance.invalid && (balance.dirty || balance.touched)" class="alert alert-danger">
                 <div *ngIf="balance.errors.required"> Balance is required. </div>
                 <div *ngIf="balance.errors.minlength"> Balance must be at least 4 characters long. </div>
@@ -123,11 +123,11 @@
           <h5 class="card-header">Address</h5>
           <form #AddressForm="ngForm" >
             <div class="card-body">
-              <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+              <input type="hidden" name="id" #id="ngModel" ngModel>
           
               <div class="form-group">
                 <label for="address_line_one">Address Line 1 *</label>
-                <input id="address_line_one" name="address_line_one" class="form-control" required [(ngModel)]="formData.address_line_one"
+                <input id="address_line_one" name="address_line_one" class="form-control" required ngModel
                   #address_line_one="ngModel">
                 <div *ngIf="address_line_one.invalid && (address_line_one.dirty || address_line_one.touched)" class="alert alert-danger">
                   <div *ngIf="address_line_one.errors.required"> Address Line 1 </div>
@@ -135,7 +135,7 @@
               </div>
               <div class="form-group">
                 <label for="address_line_two">Address Line 2 *</label>
-                <input id="address_line_two" name="address_line_two" class="form-control" required [(ngModel)]="formData.address_line_two"
+                <input id="address_line_two" name="address_line_two" class="form-control" required ngModel
                   #address_line_two="ngModel">
                 <div *ngIf="address_line_two.invalid && (address_line_two.dirty || address_line_two.touched)" class="alert alert-danger">
                   <div *ngIf="address_line_two.errors.required"> Address Line 2 is required. </div>
@@ -146,7 +146,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="city_id"> City *</label>
-                    <select id="city_id" name="city_id" class="custom-select" required [(ngModel)]="formData.city_id" #city_id="ngModel">
+                    <select id="city_id" name="city_id" class="custom-select" required ngModel #city_id="ngModel">
                       <option [value]="drop.code" *ngFor="let drop of lov?.citys"> {{ drop.meaning }}</option>
                     </select>
                     <div *ngIf="city_id.invalid && (city_id.dirty || city_id.touched)" class="alert alert-danger">
@@ -158,7 +158,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="state_id"> State *</label>
-                    <select id="state_id" name="state_id" class="custom-select" required [(ngModel)]="formData.state_id" #state_id="ngModel">
+                    <select id="state_id" name="state_id" class="custom-select" required ngModel #state_id="ngModel">
                       <option [value]="drop.code" *ngFor="let drop of lov?.states"> {{ drop.meaning }}</option>
                     </select>
                     <div *ngIf="state_id.invalid && (state_id.dirty || state_id.touched)" class="alert alert-danger">
@@ -170,7 +170,7 @@
           
               <div class="form-group">
                 <label for="pincode">Pincode *</label>
-                <input id="pincode" name="pincode" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.pincode"
+                <input id="pincode" name="pincode" class="form-control" required minlength="4" forbiddenName="bob" ngModel
                   #pincode="ngModel">
                 <div *ngIf="pincode.invalid && (pincode.dirty || pincode.touched)" class="alert alert-danger">
                   <div *ngIf="pincode.errors.required"> Pincode is required. </div>
@@ -184,7 +184,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="type"> Type *</label>
-                    <select id="type" name="type" class="custom-select" required [(ngModel)]="formData.type" #type="ngModel">
+                    <select id="type" name="type" class="custom-select" required ngModel #type="ngModel">
                       <option [value]="drop.code" *ngFor="let drop of lov?.address_type"> {{ drop.meaning }}</option>
                     </select>
                     <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger">
@@ -195,7 +195,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <div class="custom-control custom-checkbox mr-sm-2 m-b-15">
-                      <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" [(ngModel)]="formData.active">
+                      <input type="checkbox" name="active" class="custom-control-input" id="active" value='Y' #active="ngModel" ngModel>
                       <label class="custom-control-label" for="active">Active</label>
                     </div>
                   </div>
@@ -213,13 +213,13 @@
           
               <!-- S no-->
           
-              <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
+              <input type="hidden" name="id" #id="ngModel" ngModel>
           
               <div class="row p-t-20">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="item_name">Item Name *</label>
-                    <input id="item_name" name="item_name" class="form-control" required [(ngModel)]="formData.item_name" #item_name="ngModel">
+                    <input id="item_name" name="item_name" class="form-control" required ngModel #item_name="ngModel">
                     <div *ngIf="item_name.invalid && (item_name.dirty || item_name.touched)" class="alert alert-danger">
                       <div *ngIf="item_name.errors.required"> Item name is required </div>
                     </div>
@@ -228,7 +228,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="gsm">GSM *</label>
-                    <input id="gsm" name="gsm" class="form-control" required [(ngModel)]="formData.gsm" #gsm="ngModel">
+                    <input id="gsm" name="gsm" class="form-control" required ngModel #gsm="ngModel">
                     <div *ngIf="gsm.invalid && (gsm.dirty || gsm.touched)" class="alert alert-danger">
                       <div *ngIf="gsm.errors.required"> GSM is required. </div>
                     </div>
@@ -240,7 +240,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="default_price">Default Price *</label>
-                    <input id="default_price" name="default_price" class="form-control" required [(ngModel)]="formData.default_price" #default_price="ngModel">
+                    <input id="default_price" name="default_price" class="form-control" required ngModel #default_price="ngModel">
                     <div *ngIf="default_price.invalid && (default_price.dirty || default_price.touched)" class="alert alert-danger">
                       <div *ngIf="default_price.errors.required"> Default Price </div>
                     </div>
@@ -249,7 +249,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label for="actual_price">Actual Price *</label>
-                    <input id="actual_price" name="actual_price" class="form-control" required [(ngModel)]="formData.actual_price" #actual_price="ngModel">
+                    <input id="actual_price" name="actual_price" class="form-control" required ngModel #actual_price="ngModel">
                     <div *ngIf="actual_price.invalid && (actual_price.dirty || actual_price.touched)" class="alert alert-danger">
                       <div *ngIf="actual_price.errors.required"> actual_price is required. </div>
                     </div>
@@ -300,7 +300,7 @@
           
               <div class="form-group">
                 <label for="unit"> Unit *</label>
-                <select id="unit" name="unit" class="custom-select" required [(ngModel)]="formData.unit" #unit="ngModel">
+                <select id="unit" name="unit" class="custom-select" required ngModel #unit="ngModel">
                   <option [value]="drop.code" *ngFor="let drop of lov?.units"> {{ drop.meaning }}</option>
                 </select>
                 <div *ngIf="unit.invalid && (unit.dirty || unit.touched)" class="alert alert-danger">

@@ -18,16 +18,13 @@
       <div class="card-body">
         <!-- <h4 class="card-title">Form validation with hero</h4> -->
         <!-- <h6 class="card-subtitle">This is the simple form validation page -->
-          <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a>
+          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
         <!-- </h6> -->
 
-        
-
         <form #form="ngForm" (submit)="submit(form)">
-          <div>
-
+          <div class="row">
             <!-- S no-->
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="s_no">S No *</label>
               <input id="s_no" name="s_no" class="form-control" required [(ngModel)]="formData.s_no" #s_no="ngModel">
               <div *ngIf="s_no.invalid && (s_no.dirty || s_no.touched)" class="alert alert-danger">
@@ -35,7 +32,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="roll_no">Tumbrow/Roll No.*</label>
               <input id="roll_no" name="roll_no" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.roll_no" #roll_no="ngModel">
               <div *ngIf="roll_no.invalid && (roll_no.dirty || roll_no.touched)" class="alert alert-danger">
@@ -45,7 +42,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="gsm">GSM</label>
               <input id="gsm" name="gsm" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.gsm" #gsm="ngModel">
               <div *ngIf="gsm.invalid && (gsm.dirty || gsm.touched)" class="alert alert-danger">
@@ -55,7 +52,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="bf">BF</label>
               <input id="bf" name="bf" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.bf" #bf="ngModel">
               <div *ngIf="bf.invalid && (bf.dirty || bf.touched)" class="alert alert-danger">
@@ -65,7 +62,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="no_reels">No of reels</label>
               <input id="no_reels" name="no_reels" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.no_reels" #no_reels="ngModel">
               <div *ngIf="no_reels.invalid && (no_reels.dirty || no_reels.touched)" class="alert alert-danger">
@@ -75,7 +72,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="size">Size</label>
               <input id="size" name="size" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.size" #size="ngModel">
               <div *ngIf="size.invalid && (size.dirty || size.touched)" class="alert alert-danger">
@@ -85,7 +82,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="pm">PM</label>
               <input id="pm" name="pm" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.pm" #pm="ngModel">
               <div *ngIf="pm.invalid && (pm.dirty || pm.touched)" class="alert alert-danger">
@@ -95,7 +92,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="weight">Weight</label>
               <input id="weight" name="weight" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.weight" #weight="ngModel">
               <div *ngIf="weight.invalid && (weight.dirty || weight.touched)" class="alert alert-danger">
@@ -105,7 +102,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="date">Date</label>
               <input id="date" name="date" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.date" #date="ngModel">
               <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
@@ -115,7 +112,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="operator">Operator</label>
               <input id="operator" name="operator" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.operator" #operator="ngModel">
               <div *ngIf="operator.invalid && (operator.dirty || operator.touched)" class="alert alert-danger">
@@ -125,7 +122,7 @@
               </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group col-md-6">
               <label for="shift">Shift</label>
               <input id="shift" name="shift" class="form-control" required minlength="4" forbiddenName="bob" [(ngModel)]="formData.shift" #shift="ngModel">
               <div *ngIf="shift.invalid && (shift.dirty || shift.touched)" class="alert alert-danger">
@@ -135,21 +132,6 @@
               </div>
             </div>
 
-
-            <!-- <div class="form-group">
-              <label for="gsm">GSM</label>
-              <input id="gsm" class="form-control" name="gsm" [(ngModel)]="hero.gsm"> </div>
-            <div class="form-group">
-              <label for="power">Hero Power</label>
-              <select id="power" name="power" class="form-control" required [(ngModel)]="hero.power" #power="ngModel">
-                <option *ngFor="let p of powers" [value]="p">{{p}}</option>
-              </select>
-              <div *ngIf="power.errors && power.touched" class="alert alert-danger">
-                <div *ngIf="power.errors.required">Power is required.</div>
-              </div>
-            </div> -->
-            <!-- <button type="submit" class="btn btn-danger">Submit</button> -->
-            <!-- <button type="button" class="btn btn-inverse" (click)="form.resetForm({name:'satish', alterEgo: 'asdsdf', power: 'Really Smart'})">Reset</button> -->
           </div>
           <div class="submitted-message" *ngIf="form.submitted">
             <p>You've submitted your form, {{ form.value }}!</p>

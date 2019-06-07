@@ -1,0 +1,47 @@
+#item-detail-form-div {
+    /* display: inline-flex; */
+    overflow: auto;
+}
+
+.item-detail {
+    display: flex;
+}
+.item-header {
+    display: flex;
+}
+
+.action.pointer {
+    cursor: pointer;
+    padding: .40em;
+}
+
+.action.pointer:hover {
+    cursor: pointer;
+    padding: .40em;
+}
+.action.pointer.delete:hover {
+    color:red;
+}
+.action.pointer.clone:hover {
+    color:red;
+}
+
+.add-new-button {
+    position: absolute;
+    left: -1em;
+    top: -1em;
+    z-index: 11;
+    box-shadow: 1em silver;
+}
+.action-div{
+    z-index: 10;
+    /* position: absolute; */
+    /* background-color: bisque; */
+    height: calc(2.25rem + 2px);
+    width: 100%;
+}
+
+.item-detail>.input-div:first {
+    margin-left:100em;
+    background-color: red;
+}

@@ -1,0 +1,299 @@
+
+
+<div class="button-group" *ngIf="displayActions">
+  <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
+  <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
+  <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
+  <button class="btn btn-danger" (click)="playSave(form)">Play Save</button>
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
+  <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)">Fake</button>
+  <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button>
+</div>
+
+<div class="row" >
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
+          <div>
+            <input type="hidden" name="id" #id="ngModel" ngModel>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="type">{{ startCase('type') }} *</label>
+                  <input id="type" name="type" class="form-control" required ngModel #type="ngModel">
+                  <div *ngIf="type.invalid && (type.dirty || type.touched)" class="alert alert-danger">
+                    <div *ngIf="type.errors.required"> {{ startCase('type') }} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="order_no"> {{ startCase('order_no')}} *</label>
+                  <input id="order_no" name="order_no" class="form-control" required minlength="4" forbiddenName="bob"
+                    ngModel #order_no="ngModel">
+                  <div *ngIf="order_no.invalid && (order_no.dirty || order_no.touched)" class="alert alert-danger">
+                    <div *ngIf="order_no.errors.required"> {{ startCase('order_no')}} is required. </div>
+                    <div *ngIf="order_no.errors.minlength"> {{ startCase('order_no')}} must be at least 4 characters long. </div>
+                    <div *ngIf="order_no.errors.forbiddenName"> {{ startCase('order_no')}} cannot be Bob. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="date"> {{ startCase('date')}} *</label>
+                  <div class="input-group">
+                    <input class="form-control" id="date" ngModel name="date" #date="ngModel" placeholder="yyyy-mm-dd" ngbDatepicker
+                      #ngbDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary no-shadow" (click)="ngbDate.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="party"> Client's Name *</label>
+                  <input id="party" name="party" class="form-control" required
+                    ngModel #party="ngModel"
+                     [ngbTypeahead]="search3"
+                     [resultFormatter]="formatter" 
+                     [inputFormatter]="inputFormatter"
+                    >
+                  <div *ngIf="party.invalid && (party.dirty || party.touched)" class="alert alert-danger">
+                    <div *ngIf="party.errors.required"> Client's Name is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="distributor"> {{ startCase('distributor')}} *</label>
+                  <input id="distributor" name="distributor" class="form-control" required
+                    ngModel #distributor="ngModel"
+                     [ngbTypeahead]="search3" 
+                     [resultFormatter]="formatter" 
+                     [inputFormatter]="inputFormatter"
+                    >
+                  <div *ngIf="distributor.invalid && (distributor.dirty || distributor.touched)" class="alert alert-danger">
+                    <div *ngIf="distributor.errors.required"> {{ startCase('distributor')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+              
+              
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="party_order_no"> {{ startCase('party_order_no')}} *</label>
+                  <input id="party_order_no" name="party_order_no" class="form-control" required
+                    ngModel #party_order_no="ngModel">
+                  <div *ngIf="party_order_no.invalid && (party_order_no.dirty || party_order_no.touched)" class="alert alert-danger">
+                    <div *ngIf="party_order_no.errors.required"> {{ startCase('party_order_no')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="party_order_date"> {{ startCase('party_order_date')}} *</label>
+                  <div class="input-group">
+                    <input class="form-control" id="party_order_date" ngModel name="party_order_date" #party_order_date="ngModel" placeholder="yyyy-mm-dd" ngbDatepicker #ngbPartyOrderDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary no-shadow" (click)="ngbPartyOrderDate.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="against_form"> {{ startCase('against_form')}} *</label>
+                  <input id="against_form" name="against_form" class="form-control" required
+                    ngModel #against_form="ngModel">
+                  <div *ngIf="against_form.invalid && (against_form.dirty || against_form.touched)" class="alert alert-danger">
+                    <div *ngIf="against_form.errors.required"> {{ startCase('against_form')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="excisable"> {{ startCase('excisable')}} *</label>
+                  <input id="excisable" name="excisable" class="form-control" required
+                    ngModel #excisable="ngModel">
+                  <div *ngIf="excisable.invalid && (excisable.dirty || excisable.touched)" class="alert alert-danger">
+                    <div *ngIf="excisable.errors.required"> {{ startCase('excisable')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="delivery_to"> {{ startCase('delivery_to')}} *</label>
+                  <input id="delivery_to" name="delivery_to" class="form-control" required
+                    ngModel #delivery_to="ngModel">
+                  <div *ngIf="delivery_to.invalid && (delivery_to.dirty || delivery_to.touched)" class="alert alert-danger">
+                    <div *ngIf="delivery_to.errors.required"> {{ startCase('delivery_to')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="delivery_date"> {{ startCase('delivery_date')}} *</label>
+                  <div class="input-group">
+                    <input class="form-control" id="delivery_date" ngModel name="delivery_date" #delivery_date="ngModel" placeholder="yyyy-mm-dd"
+                      ngbDatepicker #ngbDeliveryDate="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary no-shadow" (click)="ngbDeliveryDate.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="order_type"> {{ startCase('order_type')}} *</label>
+                  <input id="order_type" name="order_type" class="form-control" required
+                    ngModel #order_type="ngModel">
+                  <div *ngIf="order_type.invalid && (order_type.dirty || order_type.touched)" class="alert alert-danger">
+                    <div *ngIf="order_type.errors.required"> {{ startCase('order_type')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="consignee"> {{ startCase('consignee')}} *</label>
+                  <input id="consignee" name="consignee" class="form-control" required
+                    ngModel #consignee="ngModel">
+                  <div *ngIf="consignee.invalid && (consignee.dirty || consignee.touched)" class="alert alert-danger">
+                    <div *ngIf="consignee.errors.required"> {{ startCase('consignee')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="to_place"> {{ startCase('to_place')}} *</label>
+                  <input id="to_place" name="to_place" class="form-control" required
+                    ngModel #to_place="ngModel">
+                  <div *ngIf="to_place.invalid && (to_place.dirty || to_place.touched)" class="alert alert-danger">
+                    <div *ngIf="to_place.errors.required"> {{ startCase('to_place')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="amendment_order"> {{ startCase('amendment_order')}} *</label>
+                  <input id="amendment_order" name="amendment_order" class="form-control" ngModel #amendment_order="ngModel">
+                  <div *ngIf="amendment_order.invalid && (amendment_order.dirty || amendment_order.touched)" class="alert alert-danger">
+                    <div *ngIf="amendment_order.errors.required"> {{ startCase('amendment_order')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="con_ref_no"> {{ startCase('con_ref_no')}} *</label>
+                  <input id="con_ref_no" name="con_ref_no" class="form-control" ngModel #con_ref_no="ngModel">
+                  <div *ngIf="con_ref_no.invalid && (con_ref_no.dirty || con_ref_no.touched)" class="alert alert-danger">
+                    <div *ngIf="con_ref_no.errors.required"> {{ startCase('con_ref_no')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="sale_v_type"> {{ startCase('sale_v_type')}} *</label>
+                  <input id="sale_v_type" name="sale_v_type" class="form-control" ngModel #sale_v_type="ngModel">
+                  <div *ngIf="sale_v_type.invalid && (sale_v_type.dirty || sale_v_type.touched)" class="alert alert-danger">
+                    <div *ngIf="sale_v_type.errors.required"> {{ startCase('sale_v_type')}} is required. </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          
+        </form>
+      </div>
+    </div>
+
+    <!-- Pricing Item Details -->
+    <div class="card">
+
+      <div class="add-new-button">
+        <button class="btn btn-success btn-circle"> <i class="fa fa-plus"></i>  </button>
+      </div>
+
+      <div class="item-detail-form" id="item-detail-form-div">
+        <div  class="item-header">
+        <!-- <ng-template > -->
+          <div class="col-md-1 action-div"> Action </div>
+          <!-- <div class="col-md-1" (click)="cloneItem(index)"> <button class="btn btn-success"> <i class="mdi mdi-content-copy"></i> duplicate </button></div> -->
+          <!-- <div class="col-md-1" (click)="deleteItem(index)"> <button class="btn btn-danger"> <i class="mdi mdi-content-cut"></i> delete </button></div> -->
+          <div class="col-md-1"> Item Name </div>
+          <div class="col-md-1"> Description </div>
+          <div class="col-md-1"> BF </div>
+          <div class="col-md-1"> Width </div>
+          <div class="col-md-1"> Length </div>
+          <div class="col-md-1"> Unit </div>
+          <div class="col-md-1"> Grain </div>
+          <div class="col-md-1"> Gsm </div>
+          <div class="col-md-1"> Fixel Pack </div>
+          <div class="col-md-1"> Weight </div>
+          <div class="col-md-1"> Sec Unit </div>
+          <div class="col-md-1"> Weight Sku </div>
+          <div class="col-md-1"> Rate </div>
+          <div class="col-md-1"> Amount </div>
+          <div class="col-md-1"> CH </div>
+        </div>
+        <div *ngFor="let item of items; let index = index;">
+          <form #itemForm="ngForm">
+
+            <div class="item-detail">
+              <div class="col-md-1 action-div"> {{ index+1 }}
+                <i class="mdi mdi-content-copy action pointer clone" (click)="cloneItem(index)"></i>
+                <i class="mdi mdi-content-cut action pointer delete" (click)="deleteItem(index)"></i>
+              </div>
+              
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [(ngModel)]="item.item_name" name="item_name" [placeholder]=" startCase('item_name') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('description') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('bf') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('width') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('length') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('unit') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('grain') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('gsm') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('fixel_pack') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('weight') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('sec_unit') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('wieght_sku') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('rate') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('amount') "></div>
+              <div class="col-md-1 input-div"><input type="text" class="form-control" [placeholder]=" startCase('ch') "></div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Search mode -->

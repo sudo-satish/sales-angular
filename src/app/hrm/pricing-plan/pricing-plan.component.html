@@ -4,7 +4,7 @@
   <button type="button" class="btn btn-primary" id="new" (click)="onNew($event, form)">New</button>
   <button type="button" class="btn btn-success" id="save" (click)="submit(form)" [disabled]="form?.invalid"> {{ form?.value.id ? 'Update': 'Save' }}</button>
   <button type="button" class="btn btn-info" id="reset" (click)="form?.resetForm()">Reset</button>
-  <!-- <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button> -->
+  <button type="button" class="btn btn-secondary" id="search" (click)="onSearch()">Search</button>
   <button type="button" class="btn btn-secondary" id="fake-data" (click)="onFake(form)" [hidden]="hideFakeBtn">Fake</button>
   <!-- <button type="button" class="btn btn-primary" id="address-update" (click)="manageAddress(form.value.id)" *ngIf="formMode == 'EDIT'" > Manage Address </button> -->
   <!-- <button type="button" class="btn btn-warning">Warning</button> -->
@@ -12,13 +12,7 @@
 </div>
 
 
-<div class="row" *ngFor="let rows of addressRows">
-  <!-- <div class="col-12 m-t-30">
-            <h4 class="m-b-0">Card styles</h4>
-            <p class="text-muted m-t-0 font-12">Cards include various options for customizing their backgrounds, borders, and color.
-              <code>.card-primary info, warning, danger</code>
-            </p>
-          </div> -->
+<!-- <div class="row" *ngFor="let rows of addressRows">
   <div class="col-md-6" *ngFor="let cols of rows">
     <div class="card card-inverse" style="background-color: #333; border-color: #333;">
       <div class="card-header">
@@ -32,22 +26,14 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <div class="row" >
   <div class="col-12">
     <div class="card">
       <div class="card-body">
-        <!-- <h4 class="card-title">Form validation with hero</h4> -->
-        <!-- <h6 class="card-subtitle">This is the simple form validation page -->
-          <!-- <a href="https://angular.io/guide/form-validation" target="_blank">Official site</a> -->
-        <!-- </h6> -->
-
         <form #form="ngForm" (submit)="submit(form)" [hidden]=" !(formMode == 'NEW' || formMode == 'EDIT') " >
           <div>
-
-            <!-- S no-->
-
               <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.id">
               <input type="hidden" name="client_id" #client_id="ngModel" [(ngModel)]="clientId">
 
@@ -99,7 +85,7 @@
 
                     <label for="from_date">From Date *</label>
                     <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd" id="from_date" ngModel name="from_date" #from_date="ngModel" ngbDatepicker #fromDate="ngbDatepicker">
+                      <input class="form-control" id="from_date" ngModel name="from_date" #from_date="ngModel" placeholder="yyyy-mm-dd"  ngbDatepicker #fromDate="ngbDatepicker">
                       <div class="input-group-append">
                         <button class="btn btn-outline-secondary no-shadow" (click)="fromDate.toggle()" type="button">
                           <i class="fa fa-calendar"></i>
@@ -146,6 +132,96 @@
         </form>
 
         <!-- rows -->
+
+        <div class="search" *ngIf=" (formMode == 'SEARCH') ">
+        
+          <!-- Search -->
+          <div class="card" *ngIf="rows.length > 0">
+            <div class="card-body">
+              <!-- <h4 class="card-title">Editing Option</h4> -->
+              <!-- <h5 class="card-subtitle">This is the editing Data table option you can double click on text</h5> -->
+        
+              <ngx-datatable #mydatatable class="material" [headerHeight]="50" [limit]="5" [columnMode]="'force'" [footerHeight]="50" [rowHeight]="'auto'"
+                [rows]="rows">
+        
+                <ngx-datatable-column name="Edit">
+                  <ng-template ngx-datatable-cell-template let-value="value" let-rowIndex="rowIndex">
+                    <button class="btn btn-success" (click)="onEdit($event, rowIndex, form)"> Edit </button>
+                  </ng-template>
+                </ngx-datatable-column>
+        
+                <ngx-datatable-column [name]="startCase('item_name')" prop="item_name">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-item_name'] = true" *ngIf="!editing[rowIndex + '-item_name']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'item_name', rowIndex)" *ngIf="editing[rowIndex+ '-item_name']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [name]="startCase('actual_price')" prop="actual_price">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-actual_price'] = true" *ngIf="!editing[rowIndex + '-actual_price']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'actual_price', rowIndex)" *ngIf="editing[rowIndex+ '-actual_price']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [name]="startCase('default_price')" prop="default_price">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-default_price'] = true" *ngIf="!editing[rowIndex + '-default_price']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'default_price', rowIndex)" *ngIf="editing[rowIndex+ '-default_price']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [name]="startCase('gsm')" prop="gsm">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gsm'] = true" *ngIf="!editing[rowIndex + '-gsm']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'gsm', rowIndex)" *ngIf="editing[rowIndex+ '-gsm']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="startCase('unit')" prop="unit">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-unit'] = true" *ngIf="!editing[rowIndex + '-unit']">
+                      {{getMeaningFromCode(lov.units, value)}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'unit', rowIndex)" *ngIf="editing[rowIndex+ '-unit']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column [name]="startCase('from_date')" prop="from_date">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-from_date'] = true" *ngIf="!editing[rowIndex + '-from_date']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'from_date', rowIndex)" *ngIf="editing[rowIndex+ '-from_date']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [name]="startCase('to_date')" prop="to_date">
+                  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                    <span title="Double click to edit" (dblclick)="editing[rowIndex + '-to_date'] = true" *ngIf="!editing[rowIndex + '-to_date']">
+                      {{value}}
+                    </span>
+                    <input autofocus (blur)="updateValue($event, 'to_date', rowIndex)" *ngIf="editing[rowIndex+ '-to_date']" type="text" [value]="value"
+                    />
+                  </ng-template>
+                </ngx-datatable-column>
+        
+              </ngx-datatable>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
